@@ -1,0 +1,2 @@
+C:\Users\dgh06\source\repos\Baekjoon lecture\Debug\Baekjoon lecture.exe
+C:\Users\dgh06\source\repos\Baekjoon lecture\Debug\Baekjoon lecture.pdb
