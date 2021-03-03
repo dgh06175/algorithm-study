@@ -182,41 +182,193 @@ using namespace std;
 //		if (is_prime(i)) cout << i << '\n';
 //}
 
-/* 1929 에라토머시기 체 */
-const int MAX = 100000;
-int main()
-{
-	bool check[MAX+1] = { 0, };
-	int a = MAX;
-	check[0] = check[1] = true;
-	for (int i = 2; i <= a; i++) {
-		if (check[i] == false) {
-			for (int j = i * i; j <= a; j += i) {
-				check[j] = true;
-			}
-		}
-	}
-	int n, m;
-	cin >> n >> m;
-	for (int i = n; i <= m; i++) {
-		if (check[i] == false) cout << i << '\n';
-	}
-}
-
-//const int MAX = 1000000;
+///* 1929 에라토머시기 체 */
+//const int MAX = 100000;
 //int main()
 //{
-//	int prime[100];
-//	int pn = 0;
-//	bool check[101] = { 0, };
-//	int n = 100;
-//	for (int i = 2; i <= n; i++) {
+//	bool check[MAX+1] = { 0, };
+//	int a = MAX;
+//	check[0] = check[1] = true;
+//	for (int i = 2; i <= a; i++) {
 //		if (check[i] == false) {
-//			prime[pn++] = i;
-//			for (int j = i * i; j <= n; j += i) {
+//			for (int j = i * i; j <= a; j += i) {
 //				check[j] = true;
 //			}
 //		}
 //	}
-//	cout << pn;
+//	int n, m;
+//	cin >> n >> m;
+//	for (int i = n; i <= m; i++) {
+//		if (check[i] == false) cout << i << '\n';
+//	}
 //}
+
+/* 6588 골드바흐의 추측 */
+//int main()
+//{
+//	const int MAX = 10000;
+//	int prime[MAX] = { 0, };
+//	int pn = 0;
+//	bool check[MAX + 1] = { false, };
+//	ios_base::sync_with_stdio(false);
+//	cin.tie(nullptr);
+//	for (int i = 2; i <= MAX; i++) {
+//		if (check[i] == false) {
+//			prime[pn++] = i;
+//			for (int j = i + i; j <= MAX; j += i) {
+//				check[j] = true;
+//			}
+//		}
+//	}
+//	while (true) {
+//		int n;
+//		cin >> n;
+//		if (n == 0) break;
+//		for (int i = 1; i < pn; i++) {
+//			if (check[n - prime[i]] == false) {
+//				cout << n << " = " << prime[i] << " + " << n - prime[i] << "\n";
+//				break;
+//			}
+//		}
+//	}
+//}
+//int main()
+//{
+//
+//	const int MAX = 100;
+//	int prime[MAX] = { 0, };
+//	int pn = 0;
+//	bool check[MAX + 1] = { false, };
+//	ios_base::sync_with_stdio(false);
+//	cin.tie(nullptr);
+//	for (int i = 2; i <= MAX; i++) {
+//		if (check[i] == false) {
+//			prime[pn++] = i;
+//			for (int j = i + i; j <= MAX; j += i) {
+//				check[j] = true;
+//			}
+//		}
+//	}
+//	for (int i = 0; i < MAX; i++) {
+//		cout << i << "번째 prime[i] = " << prime[i] << "\ncheck[i] = " << check[i] << "\n\n";
+//	}
+//}
+
+///* 2309 일곱 난쟁이 */
+//int main()
+//{
+//	int height[9];
+//	int real_height[7];
+//	int sum;
+//	for (int i = 0; i < 9; i++) {
+//		cin >> height[i];
+//	}
+//	for (int i = 0; i < 8; i++) {
+//		for (int j = i + 1; j < 9; j++) {
+//			sum = 0;
+//			for (int k = 0; k < 9; k++) {
+//				if (k != i && k != j) {
+//					sum += height[k];
+//				}
+//			}
+//			if (sum == 100) {
+//				int l = 0;
+//				for (int k = 0; k < 9; k++) {
+//					if (k != i && k != j) real_height[l++] = height[k];
+//				}
+//				int tmp;
+//				for (int n = 0; n < 6; n++) {
+//					for (int p = 0; p < 6; p++) {
+//						if (real_height[p] > real_height[p + 1]) {
+//							tmp = real_height[p];
+//							real_height[p] = real_height[p + 1];
+//							real_height[p + 1] = tmp;
+//						}
+//					}
+//				}
+//				for (int q = 0; q < 7; q++) {
+//					cout << real_height[q] << '\n';
+//				}
+//				return 0;
+//			}
+//		}
+//	}
+//}
+
+///* 3085번 사탕 게임 */
+//
+//void swap(char &a, char &b)
+//{
+//	char temp = a;
+//	a = b;
+//	b = temp;
+//}
+//
+///* 테이블의 정보를 받고 먹을 수 있는 사탕의 최대 개수를 반환 */
+//int Max_Eatable(string* table, int n)
+//{
+//	int max = 1;
+//	int count;
+//	int i = 0;
+//	for (int i = 0; i < n; i++) {
+//		count = 1;
+//		for (int j = 0; j < n - 1; j++) {
+//			if (table[i][j] == table[i][j + 1]) {
+//				count += 1;
+//			}
+//			else {
+//				count = 1;
+//			}
+//			if (count > max)max = count;
+//		}
+//		count = 1;
+//		for (int j = 0; j < n - 1; j++) {
+//			if (table[j][i] == table[j + 1][i]) {
+//				count += 1;
+//			}
+//			else {
+//				count = 1;
+//			}
+//			if (count > max)max = count;
+//		}
+//	}
+//	return max;
+//}
+//
+//int main()
+//{
+//	int n;
+//	int max = 1;
+//	int tmp;
+//	cin >> n;
+//	/* 테이블 배열 생성 */
+//	string* table = new string [n];
+//	/* 사탕 배치 */
+//	for (int i = 0; i < n; i++) {
+//		cin >> table[i];
+//	}
+//	/* 인접 사탕 교환하면서 먹을 수 있는 최대 사탕 개수 검사 */
+//	tmp = Max_Eatable(table, n);
+//	for (int i = 0; i < n; i++) {
+//		for (int j = 0; j < n; j++) {
+//			if (i + 1 < n) {
+//				swap(table[i][j], table[i + 1][j]);
+//				tmp = Max_Eatable(table, n);
+//				if (max < tmp) {
+//					max = tmp;
+//				}
+//				swap(table[i][j], table[i + 1][j]);
+//			}
+//			if (j + 1 < n) {
+//				swap(table[i][j], table[i][j + 1]);
+//				tmp = Max_Eatable(table, n);
+//				if (max < tmp) {
+//					max = tmp;
+//				}
+//				swap(table[i][j], table[i][j + 1]);
+//			}
+//		}
+//	}
+//	cout << max;
+//}
+
