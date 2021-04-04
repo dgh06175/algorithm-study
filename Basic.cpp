@@ -1190,3 +1190,150 @@ using namespace std;
 //	}
 //	go(s, a, 0); // s를 이용해서 a의 값을 빼내면 된다. a의 크기는 n
 //}
+
+/* 10972 */
+//#include <algorithm>
+//#include <vector>
+//
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	vector<int> a(n);
+//	for (int i = 0; i < n; i++) {
+//		cin >> a[i];
+//	}
+//	if (next_permutation(a.begin(), a.end())) {
+//		for (int i = 0; i < n; i++) {
+//			cout << a[i] << ' ';
+//		}
+//	}
+//	else {
+//		cout << "-1";
+//	}
+//	cout << '\n';
+//}
+//
+//void swap(int& a, int& b)
+//{
+//	int tmp = a;
+//	a = b;
+//	b = tmp;
+//}
+//
+//bool next_permutation(int* a, int n)
+//{
+//	int i = n - 1; // a[n-1]은 배열의 마지막
+//	while (i > 0 && a[i] <= a[i - 1]) i--;
+//	if (i <= 0) return false;
+//	int j = n - 1;
+//	while (a[i - 1] >= a[j]) j--;
+//	swap(a[j], a[i - 1]);
+//	j = n - 1;
+//	while (i < j)
+//	{
+//		swap(a[j], a[i]);
+//		i += 1; j -= 1;
+//	}
+//	return true;
+//}
+//
+////
+//bool previous_permutation(int* a, int n)
+//{
+//	int i = n - 1; // a[n-1]은 배열의 마지막
+//	while (i > 0 && a[i] >= a[i - 1]) i--;
+//	if (i <= 0) return false;
+//	int j = n - 1;
+//	while (a[i - 1] <= a[j]) j--;
+//	swap(a[j], a[i - 1]);
+//	j = n - 1;
+//	while (i < j)
+//	{
+//		swap(a[j], a[i]);
+//		i += 1; j -= 1;
+//	}
+//	return true;
+//}
+//
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	int* a = new int[n];
+//	for (int i = 0; i < n; i++) {
+//		cin >> a[i];
+//	}
+//	if (next_permutation(a, n)) {
+//		for (int i = 0; i < n; i++) {
+//			cout << a[i] << ' ';
+//		}
+//	}
+//	else cout << "-1";
+//}
+
+/* 10974 */
+//void swap(int& a, int& b)
+//{
+//	int tmp = a;
+//	a = b;
+//	b = tmp;
+//}
+//
+//bool my_next_permutation(int* a, int n)
+//{
+//	int i = n - 1; // a[n-1]은 배열의 마지막
+//	while (i > 0 && a[i] <= a[i - 1]) i--;
+//	if (i <= 0) return false;
+//	int j = n - 1;
+//	while (a[i - 1] >= a[j]) j--;
+//	swap(a[j], a[i - 1]);
+//	j = n - 1;
+//	while (i < j)
+//	{
+//		swap(a[j], a[i]);
+//		i += 1; j -= 1;
+//	}
+//	return true;
+//}
+/* 10974 내장함수 이용 */
+//#include <algorithm>
+//#include <vector>
+//int main(){
+//	int n;cin >> n;vector<int>a(n);
+//	for (int i = 0; i < n; i++)a[i] = i + 1;
+//	do{
+//		for (int i = 0; i < n; i++)cout << a[i] << ' ';
+//		cout << '\n';
+//	} while (next_permutation(a.begin(), a.end()));
+//}
+/* 10974 재귀함수 이용 */
+//int n;
+//bool c[9];
+//void go(int* a, int index)
+//{
+//	if (index == n) {
+//		for (int i = 0; i < n; i++) {
+//			cout << a[i] << ' ';
+//		}
+//		cout << '\n';
+//		return;
+//	}
+//	for (int i = 1; i <= n; i++) {
+//		if (c[i])continue;
+//		a[index] = i;
+//		c[i] = true;
+//		go(a, index + 1);
+//		c[i] = false;
+//	}
+//}
+//
+//int main()
+//{
+//	cin >> n;
+//	int* a = new int[n];
+//	for (int i = 0; i < n; i++) {
+//		a[i] = i + 1;
+//	}
+//	go(a, 0);
+//}
