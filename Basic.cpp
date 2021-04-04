@@ -372,3 +372,821 @@ using namespace std;
 //	cout << max;
 //}
 
+///* 1476 */
+//int main()
+//{
+//	int E, S, M, e = 0, s = 0, m = 0;
+//	cin >> E >> S >> M;
+//	for (int year = 1; year < 10000; year++) {
+//		e += 1;
+//		s += 1;
+//		m += 1;
+//		if (e > 15) e = 1;
+//		if (s > 28) s = 1;
+//		if (m > 19) m = 1;
+//		if (e == E && s == S && m == M) {
+//			cout << year;
+//			break;
+//		}
+//	}
+//} 
+
+/* 1107 */
+//bool broken[10];
+//
+//int possible(int c) // 채널숫자를 받아서 조합 불가능하면 0, 가능하면 c의 자릿수 반환
+//{
+//	if (c == 0)
+//	{
+//		if (broken[0]) return 0;
+//		else return 1;
+//	}
+//	int len = 0;
+//	while (c > 0)
+//	{
+//		if (broken[c % 10]) return 0;
+//		len += 1;
+//		c /= 10;
+//	}
+//	return len;
+//}
+//
+//int main()
+//{
+//	int n, m; // n: 이동하려는 채널 m: 고장난 버튼의 개수
+//	cin >> n >> m;
+//	for (int i = 0; i < m; i++) { // broken[x]가 true면 고장난 버튼
+//		int x;
+//		cin >> x;
+//		broken[x] = true;
+//	}
+//	int ans = n - 100;
+//	if (n < 100) {
+//		ans = -ans;
+//	}
+//	for (int i = 0; i <= 1000000; i++) {
+//		int len = possible(i);
+//		if (len > 0) {
+//			int press = i - n;
+//			if (press < 0)press = -press;
+//			if (press + len < ans) ans = press + len;
+//		}
+//	}
+//	cout << ans;
+//}
+
+
+///* 14500번 */
+//int paper[500][500];
+////int block[19][3][2] = {
+////	{{1,0},{2,0},{3,0}}, // ㅡ
+////	{{0,1},{0,2},{0,3}}, // ㅣ
+////	{{1,0},{0,1},{1,1}}, // ㅁ
+////	{{1,0},{2,0},{2,1}}, //ㄴ
+////	{{1,0},{2,0},{2,-1}}, //
+////	{{0,1},{0,2},{1,2}}, //
+////	{{0,1},{0,2},{-1,2}}, //
+////	{{-1,0},{-2,0},{-2,1}}, //
+////	{{-1,0},{-2,0},{-2,-1}}, //
+////	{{0,-1},{0,-2},{-1,-2}}, //
+////	{{0,-1},{0,-2},{1,-2}}, //
+////	{{1,0},{1,1},{2,1}}, //ㄴㄱ
+////	{{1,0},{1,-1},{2,-1}}, //
+////	{{0,1},{-1,1},{-1,2}}, //
+////	{{0,1},{1,1},{1,2}}, //
+////	{{0,1},{1,1},{0,2}}, //ㅜ
+////	{{0,1},{-1,-1},{0,2}}, //ㅗ
+////	{{-1,0},{-1,1},{-2,0}}, //ㅏ
+////	{{-1,0},{-1,-1},{-2,0}}, //ㅓ
+////};
+//
+//int block[19][3][2] = {
+//	{{0,1}, {0,2}, {0,3}},
+//	{{1,0}, {2,0}, {3,0}},
+//	{{1,0}, {1,1}, {1,2}},
+//	{{0,1}, {1,0}, {2,0}},
+//	{{0,1}, {0,2}, {1,2}},
+//	{{1,0}, {2,0}, {2,-1}},
+//	{{0,1}, {0,2}, {-1,2}},
+//	{{1,0}, {2,0}, {2,1}},
+//	{{0,1}, {0,2}, {1,0}},
+//	{{0,1}, {1,1}, {2,1}},
+//	{{0,1}, {1,0}, {1,1}},
+//	{{0,1}, {-1,1}, {-1,2}},
+//	{{1,0}, {1,1}, {2,1}},
+//	{{0,1}, {1,1}, {1,2}},
+//	{{1,0}, {1,-1}, {2,-1}},
+//	{{0,1}, {0,2}, {-1,1}},
+//	{{0,1}, {0,2}, {1,1}},
+//	{{1,0}, {2,0}, {1,1}},
+//	{{1,0}, {2,0}, {1,-1}},
+//};
+//
+//int MaxSum(int paper[][500], int n, int m, int i, int j)
+//{
+//	int max = 0;
+//	for (int k = 0; k < 19; k++) { // 블록의 모양 결정
+//		bool ok = true;
+//		int sum = paper[i][j]; // 합계변수 초기화
+//		for (int l = 0; l < 3; l++) {
+//			int x = i + block[k][l][0];
+//			int y = j + block[k][l][1];
+//			if (x >= 0 && x < n && y >= 0 && y < m) {
+//				sum += paper[x][y];
+//			}
+//			else {
+//				ok = false;
+//				break;
+//			}
+//		}
+//		if (ok && max < sum)max = sum;
+//	}
+//	return max;
+//}
+//
+//int main()
+//{
+//	int n, m;
+//	cin >> n >> m;
+//	//int** paper = new int*[n];
+//	//for (int i = 0; i < n; i++) { // 아래로 n칸, 옆으로 m칸의 이차원 배열 생성
+//	//	paper[i] = new int[m];
+//	//}
+//	for (int i = 0; i < n; i++) { // 각 칸에 정수 입력
+//		for (int j = 0; j < m; j++) {
+//			cin >> paper[i][j];
+//		}
+//	}	
+//	int max = 0;
+//	for (int i = 0; i < n; i++) {
+//		for (int j = 0; j < m; j++) {
+//			int tmp = MaxSum(paper, n, m, i, j);
+//			if (tmp > max)max = tmp;
+//			/*for (int k = 0; k < 19; k++) {
+//				bool ok = true;
+//				int sum = paper[i][j];
+//				for (int l = 0; l < 3; l++) {
+//					int x = i + block[k][l][0];
+//					int y = j + block[k][l][1];
+//					if (x >= 0 && x < n && y >= 0 && y < m) {
+//						sum += paper[x][y];
+//					}
+//					else {
+//						ok = false;
+//						break;
+//					}
+//				}
+//				if (ok && max < sum)max = sum;
+//			}*/
+//		}
+//	}
+//	cout << max;
+//	//for (int i = 0; i < n; i++) {
+//	//	delete [] paper[i];
+//	//}
+//	//delete [] paper;
+//}
+
+/* 6064 */
+//int main()
+//{
+//	/*int attempt;
+//	cin >> attempt;
+//	for (int j = 0; j < attempt; j++) {
+//		int m, n, x, y, OK = 0;
+//		cin >> m >> n >> x >> y;
+//		int yearX = 0, yearY = 0;
+//		for (int i = 1; i <= m * n; i++) {
+//			yearX += 1;
+//			yearY += 1;
+//			if (yearX > m)yearX = 1;
+//			if (yearY > n)yearY = 1;
+//			if (x == yearX && y == yearY) {
+//				OK = i;
+//				break;
+//			}
+//		}
+//		if (OK) cout << OK;
+//		else cout << -1;
+//		cout << '\n';
+//	}*/
+//	int t;
+//	cin >> t;
+//	while (t--) {
+//		int m, n, x, y, OK = 0;
+//		cin >> m >> n >> x >> y;
+//		for (int i = x - 1; i <= m * n; i += m) {
+//			if (i % m == x - 1 && i % n == y - 1) {
+//				OK = i + 1;
+//				break;
+//			}
+//		}
+//		if (OK) cout << OK;
+//		else cout << -1;
+//		cout << '\n';
+//	}
+//}
+
+/* 1748 */
+//#include <cmath>
+//int main()
+//{
+//	int n, len = 0;
+//	int count = 0;
+//	cin >> n;
+//	int m = n;
+//	for (int i = 1; i <= 10; i++) {
+//		m /= 10;
+//		if (m == 0) {
+//			len = i; // num = n의 자릿수
+//			break;
+//		}
+//	}
+//	for (int i = 1; i <= len - 1; i++) { // count = n의 이전 자릿수(num-1)까지의 모든 자릿수의 합
+//		count += i * (int)(pow(10, i) - (int)pow(10, i - 1));
+//	}
+//	count += (n - (int)pow(10, len - 1) + 1) * len;
+//	cout << count;
+//}
+
+
+///* 15649 */
+//bool c[10]; int a[10];
+//void go(int index, int n, int m)
+//{
+//	if (index == m) {
+//		for (int i = 0; i < 10; i++) {
+//			if (a[i] != 0)cout << a[i] << " ";
+//		}
+//		cout << "\n";
+//		return;
+//	}
+//	for (int i = 1; i <= n; i++) {
+//		if (c[i])continue; // i를 사용했으면 true 이므로 i를 사용했으면 아랫줄을 실행하지 않고 다음루프 실행
+//		c[i] = true;
+//		a[index] = i;
+//		go(index + 1, n, m);
+//		c[i] = false;
+//	}
+//}
+//
+//int main()
+//{
+//	int n, m;
+//	cin >> n >> m;
+//	go(0, n, m);
+//}
+
+//bool c[10];
+//int a[10];
+//void go(int index, int n, int m)
+//{
+//	if (index == m) {// 한 줄 채워졌으면 배열 출력
+//		for (int i = 0; i < m; i++)
+//			cout << a[i] << " ";
+//		cout << '\n';
+//		return;
+//	}
+//
+//	for (int i = 1; i <= n; i++) {
+//		if (c[i] == false){
+//			c[i] = true;
+//			a[index] = i;
+//			go(index + 1, n, m);
+//			c[i] = false;
+//		}
+//	}
+//
+//}
+//
+//int main()
+//{
+//	int n, m; // 1부터 n까지 자연수 중에서 중복 없이 m개를 고른 수열을 모두 출력한다.
+//	cin >> n >> m;
+//	go(0, n, m);
+//}
+
+//중복순열
+//#define endl "\n"
+//#define MAX 5
+//
+//int Arr[MAX];
+//int Select[MAX];
+//
+//void DFS(int Cnt)
+//{
+//    if (Cnt == 3)
+//    {
+//        cout << " { ";
+//        for (int i = 0; i < 3; i++)
+//        {
+//            cout << Select[i] << " ";
+//        }
+//        cout << "} " << endl;
+//        return;
+//    }
+//
+//    for (int i = 0; i < MAX; i++)
+//    {
+//        Select[Cnt] = Arr[i];
+//        DFS(Cnt + 1);
+//    }
+//}
+//
+//int main(void)
+//{
+//    for (int i = 0; i < MAX; i++) Arr[i] = i + 1;
+//    DFS(0);
+//}
+
+///* 15650 15649에 오름차순 조건 추가 -> c[10] 배열 아무의미 X */
+//int a[10];
+//void go(int index, int start, int n, int m)
+//{
+//	if (index == m) {
+//
+//		for (int i = 0; i < 10; i++) {
+//			if (a[i] != 0)cout << a[i] << " ";
+//		}
+//		cout << "\n";
+//		return;
+//	}
+//	for (int i = start; i <= n; i++) {
+//		a[index] = i;
+//		go(index + 1, i + 1 , n, m);
+//	}
+//}
+//
+//int main()
+//{
+//	int n, m;
+//	cin >> n >> m;
+//	go(0, 1, n, m);
+//}
+
+//int a[10];
+//void go(int index, int selected, int n, int m) {
+//	if (selected == m) {
+//		for (int i = 0; i < 10; i++) {
+//			if (a[i] != 0)cout << a[i] << " ";
+//		}
+//		cout << "\n";
+//		return;
+//	}
+//	if (index > n)return;
+//	a[selected] = index;
+//	go(index + 1, selected + 1, n, m);
+//	a[selected] = 0;
+//	go(index + 1, selected, n, m);
+//}
+//
+//int main()
+//{
+//	int n, m;
+//	cin >> n >> m;
+//	go(1, 0, n, m);
+//}
+
+/* 9095 */
+//int cnt;
+////void go(int index, int sum, int n)
+//void go(int sum, int n)
+//{
+//	//if (index > 10) return;
+//	if (sum > n) return; // 이렇게 해도 알아서 잘 됨. index가 필요 없었다
+//	if (sum == n) {
+//		cnt += 1; return;
+//	}
+//	for (int j = 1; j <= 3; j++)
+//	{
+//		//go(index + 1, sum + j, n);
+//		go(sum + j, n);
+//	}
+//	sum = 0;
+//}
+//
+//int main()
+//{
+//	int test_case, n;
+//	cin >> test_case;
+//	for (int i = 0; i < test_case; i++) {
+//		cnt = 0;
+//		cin >> n;
+//		//go(0, 0, n);
+//		go(0, n);
+//		cout << cnt << '\n';
+//	}
+//}
+//
+
+/* 1759 */
+// 암호는 C개의 알파벳중에 서로 다른 L개의 알파벳 소문자들로 구성
+// 3 <= L <= C<= 15
+//char a[15];
+//int L, C;
+//void go(int index, int start, char* alpha)
+//{
+//	if (index == L) {
+//		int vowel = 0;
+//		int consonant = 0;
+//		for (int i = 0; i < L; i++) { // 최소 한개의 모음, 최소 두개의 자음 있어야됨
+//			if (a[i] == 'a' || a[i] == 'e' || a[i] == 'i' || a[i] == 'o' || a[i] == 'u')
+//				vowel += 1;
+//			else
+//				consonant += 1;
+//		}
+//		if (vowel >= 1 && consonant >= 2) {
+//			/*for (int i = 0; i < 15; i++) {
+//				if (a[i] != 0)cout << a[i] << " ";
+//			}*/
+//			cout << a << '\n';
+//		}
+//		return;
+//	}
+//	else if (index > L) return;
+//	else {
+//		for (int i = start; i < C; i++) {
+//			a[index] = alpha[i];
+//			go(index + 1, i + 1, alpha);
+//		}
+//	}
+//}
+//
+//int main()
+//{
+//	cin >> L >> C; // (3 <= L <= C <= 15)
+//	char* alpha = new char[C];
+//	for (int i = 0; i < C; i++)
+//	{
+//		cin >> alpha[i];
+//	}
+//	// alpha를 사전순으로 오름차순 정렬해야됨
+//	for (int i = 0; i < C; i++) {
+//		for (int j = i; j < C; j++) {
+//			if (alpha[i] > alpha[j]) {
+//				int tmp = alpha[i];
+//				alpha[i] = alpha[j];
+//				alpha[j] = tmp;
+//			}
+//		}
+//	}
+//	go(0, 0, alpha);
+//}
+
+/* 14501 */
+//int n;
+//int total_Pay;
+//void go(int** timeline, int Pay, int Date)
+//{
+//	if (Date > n) {
+//		if (total_Pay < Pay) {
+//			total_Pay = Pay;
+//		}
+//		return;
+//	}
+//	if (Date + timeline[Date - 1][0] <= n + 1) // 한다
+//		go(timeline, Pay + timeline[Date - 1][1], Date + timeline[Date - 1][0]);
+//	go(timeline, Pay, Date + 1);
+//}
+//
+//int main()
+//{
+//	cin >> n;
+//	int **timeline = new int*[n];
+//	for (int i = 0; i < n; i++) {
+//		timeline[i] = new int[2];
+//		cin >> timeline[i][0] >> timeline[i][1];
+//	}
+//	go(timeline, 0, 1);
+//	cout << total_Pay;
+//
+//	
+//
+//	for (int i = 0; i < n; i++) {
+//		delete[] timeline[i];
+//	}
+//	delete [] timeline;
+//}
+
+/* 14889 */
+//void status_gap(int**, int*, int, int&, int&);
+//int teams[20];
+//int MIN = 10000000;
+//int my_abs(int a)
+//{
+//	if (a < 0) return -a;
+//	else return a;
+//}
+//
+//void divide_team(int **arr, int index, int count1, int count2, int n) // 팀을 나누는 함수(1, 2 로 구분)
+//{
+//	if (index >= n) {
+//		int sum1 = 0, sum2 = 0;
+//		status_gap(arr, teams, n, sum1, sum2);
+//		int gap = my_abs(sum1 - sum2);
+//		if (MIN > gap) MIN = gap;
+//		return;
+//	}
+//	if (count1 < n / 2) {
+//		teams[index] = 1;
+//		divide_team(arr, index + 1, count1 + 1, count2, n);
+//	}
+//	if (count2 < n / 2) {
+//		teams[index] = 2;
+//		divide_team(arr, index + 1, count1, count2 + 1, n);
+//	}
+//}
+//
+//void status_gap(int** arr, int* teams, int n, int& sum1, int& sum2)
+//{
+//	for (int i = 0; i < n - 1; i++) {
+//		for (int j = i + 1; j < n; j++) {
+//			if (teams[i] == 1 && teams[j] == 1) {
+//				sum1 += arr[i][j] + arr[j][i];
+//			}
+//			if (teams[i] == 2 && teams[j] == 2) {
+//				sum2 += arr[i][j] + arr[j][i];
+//			}
+//		}
+//	}
+//}
+//
+//int main()
+//{
+//	int n;
+//	cin >> n; // 4 ~ 20 사이의 짝수
+//	int** arr = new int* [n];
+//	for (int i = 0; i < n; i++) {
+//		arr[i] = new int[n];
+//	}
+//
+//	for (int i = 0; i < n; i++) {
+//		for (int j = 0; j < n; j++) {
+//			cin >> arr[i][j];
+//		}
+//	}
+//	divide_team(arr, 0, 0, 0, n);
+//	cout << MIN;
+//
+//	for (int i = 0; i < n; i++) {
+//		delete[] arr[i];
+//	}
+//	delete[] arr;
+//}
+
+/* 2529 부등호 */
+//#include <cmath>
+//int n;
+//int c[10];
+//long long MAX, MIN;
+//void go(int* ine, int* arr, int index)
+//{
+//	if (index == n + 1) {
+//		// 부등호 맞는지 검사
+//		/*int cnt = 0;
+//		for (int i = 0; i < n; i++) {
+//			if (ine[i] == 1) {
+//				if (arr[i] < arr[i + 1]) cnt += 1;
+//			}
+//			else if (ine[i] == 2) {
+//				if (arr[i] > arr[i + 1]) cnt += 1;
+//			}
+//		}
+//		if (cnt == n) {*/
+//			long long sum = 0;
+//
+//			/*cout << "arr = ";
+//			for (int i = 0; i < n + 1; i++) {
+//				cout << arr[i];
+//			}
+//			cout << '\n';*/
+//
+//			for (int i = 0; i < n + 1; i++) {
+//				sum += (long long)arr[i] * (long long)pow(10, n - i);
+//			}
+//			if (MAX == 0 && MIN == 0) { // 처음에만
+//				MAX = MIN = sum;
+//			}
+//			//cout << "sum = " << sum << '\n'; // 임시
+//			if (MAX < sum)MAX = sum;
+//			if (MIN > sum)MIN = sum;
+//		//}
+//		return;
+//	}
+//	for (int i = 0; i <= 9; i++) {
+//		if (c[i])continue;
+//		if (index > 0) {
+//			if (ine[index - 1] == 1) { // <
+//				if (arr[index - 1] > i) continue;
+//			}
+//			else if (ine[index - 1] == 2) { // >
+//				if (arr[index - 1] < i) continue;
+//			}
+//		}
+//		arr[index] = i;
+//		c[i] = 1;
+//		go(ine, arr, index + 1);
+//		c[i] = 0;
+//	}
+//}
+//
+//int main()
+//{
+//	cin >> n;
+//	int* ine = new int[n];
+//	int* arr = new int[n + 1];
+//	for (int i = 0; i < n; i++) {
+//		char c;
+//		cin >> c;
+//		if (c == '<') ine[i] = 1; // ine[i]가 1이면 부등호 <
+//		else if (c == '>') ine[i] = 2; // ine[i]가 2면 부등호 >
+//		else ine[i] = 0;
+//	}
+//	go(ine, arr, 0);
+//	char* CMIN = new char[n + 2];
+//	char* CMAX = new char[n + 2];
+//	for (int i = n; i >= 0; i--) {
+//		CMIN[i] = (MIN % 10) + '0';
+//		MIN /= 10;
+//		CMAX[i] = (MAX % 10) + '0';
+//		MAX /= 10;
+//	}
+//	for (int i = 0; i < n + 1; i++) {
+//		cout << CMAX[i];
+//	}
+//	cout << '\n';
+//	for (int i = 0; i < n + 1; i++) {
+//		cout << CMIN[i];
+//	}
+//}
+
+/* 1248 */
+//int n;
+//void go(char** s, int* a, int index)
+//{
+//	if (index >= n) return;
+//
+//	//int x = -1, y = -2, pos = 0;
+//	//for (int i = 0; i < n; i++) { // 현재 index의 배열s에서의 위치를 x, y에 저장
+//	//	for (int j = i; j < n; j++) {
+//	//		if (pos == index) {
+//	//			x = i;
+//	//			y = j;
+//	//			break;
+//	//		}
+//	//		pos += 1;
+//	//	}
+//	//	if (pos == index)break;
+//	//}
+//	//if (x == y) cout << "지금 index는" << index << '\n';
+//	int pos = 0, x = -1, y = -1;
+//	for (int i = 0; i < n; i++) {
+//		for (int j = i; j < n; j++) {
+//			if (pos == index) {
+//				x = i; y = j;
+//				break;
+//			}
+//			pos += 1;
+//		}
+//		if (pos == index)break;
+//	}
+//	int min = -10;
+//	int max = 10;
+//
+//	if (x != -1 && y != -1 && x == y) { // x, y에 값이 대입 됐고, x == y일 경우
+//		if (s[x][y] == '+') { // 해당 칸(a[index])의 수가 양수
+//			min = 1;
+//		}
+//		else if (s[x][y] == '-') { // 해당 칸의 수가 음수
+//			max = -1;
+//		}
+//		else if (s[x][y] == '0') { // 해당 칸의 수가 0
+//			min = 0;
+//			max = 0;
+//		}
+//	}
+//	else if (x != -1 && y != -1){
+//		if (s[x][y] == '+') {
+//			int sum = 0;
+//			for (int l = x; l <= y - 1; l++) {
+//				sum += a[l];
+//			}
+//			a[index]>
+//
+//		}
+//		else if (s[x][y] == '-') {
+//			max = -1;
+//		}
+//		else if (s[x][y] == '0') {
+//			min = 0;
+//			max = 0;
+//		}
+//	}
+//
+//
+//	for (int i = min; i <= max; i++) {
+//		a[index] = i;
+//		go(s, a, index + 1);
+//	}
+//}
+//int main()
+//{
+//	cin >> n;
+//	int* a = new int[n];
+//	char** s = new char*[n];
+//	for (int i = 0; i < n; i++) {
+//		s[i] = new char [n];
+//	}
+//	for (int i = 0; i < n; i++) {
+//		for (int j = i; j < n; j++) {
+//			char c;
+//			cin >> c;
+//			s[i][j] = c;
+//		}
+//	}
+//	go(s, a, 0);
+//}
+
+/* 1248 포기 */
+//int n;
+//int go(char** s, int* a, int a_index)
+//{
+//	if (a_index >= n) {
+//		//int count = 0;
+//		//for (int i = 0; i < n; i++) { //s배열 검증
+//		//	for (int j = i; j < n; j++) {
+//		//		int sum = 0;
+//		//		for (int k = i; k <= j; k++)
+//		//			sum += a[k];
+//		//		if (s[i][j] == '+' && sum > 0)count += 1;
+//		//		else if (s[i][j] == '0' && sum == 0) count += 1;
+//		//		else if (s[i][j] == '-' && sum < 0)count += 1;
+//		//	}
+//		//}
+//		//if (count == (n * (n + 1)) / 2)
+//		{
+//		for (int i = 0; i < n; i++) {
+//				cout << a[i] << ' ';
+//			}
+//			cout << '\n';
+//			return 1;
+//		}
+//		return 0;
+//	}
+//	//int x = -1, y = -1;
+//	//return_pos(index, x, y); // index 번째 원소가 s에서 좌표가 어떻게 되는지를 x,y에 넣어줌
+//	int start = -10, end = 10;
+//	int y = a_index;
+//	for (int x = 0; x < n; x++) {
+//		if (x == y) { // s[x][y] = a[x]의 값의 부호
+//			if (s[x][y] == '+') { // a[x]가 양수이므로 1부터 10까지 검사
+//				if (start < 1)start = 1;
+//			}
+//			else if (s[x][y] == '0') { // a[x]가 0이다
+//				a[a_index] = 0;
+//				return 0;
+//				/*start = 0;
+//				end = 0;*/
+//			}
+//			else if (s[x][y] == '-') { // a[x]가 음수이므호 -10에서 -1까지
+//				if (end > -1)end = -1;
+//			}
+//		}
+//		else {
+//			int sum = 0;
+//			for (int i = x; i <= y - 1; i++) sum += a[i];
+//			if (s[x][y] == '+') {
+//				if (start < -1 * sum)start = -1 * sum;
+//			}
+//			else if (s[x][y] == '0') {
+//				start = -1 * sum;
+//				end = -1 * sum;
+//			}
+//			else if (s[x][y] == '-') {
+//				if (end > -1 * sum)end = -1 * sum;
+//			}
+//		}
+//	}
+//	for (int i = start; i <= end; i++) {
+//		a[a_index] = i;
+//		if (go(s, a, a_index + 1) == 1) break;
+//	}
+//}
+//
+//int main()
+//{
+//	cin >> n;
+//	int* a = new int[n]; // 배열a 선언
+//	char** s = new char* [n];
+//	for (int i = 0; i < n; i++) { // 배열s 선언
+//		s[i] = new char[n];
+//	}
+//	for (int i = 0; i < n; i++) { // 배열s에 값 넣기
+//		for (int j = i; j < n; j++) {
+//			char c;
+//			cin >> c;
+//			s[i][j] = c;
+//		}
+//	}
+//	go(s, a, 0); // s를 이용해서 a의 값을 빼내면 된다. a의 크기는 n
+//}
