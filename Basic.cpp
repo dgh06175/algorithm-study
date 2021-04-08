@@ -1337,3 +1337,132 @@ using namespace std;
 //	}
 //	go(a, 0);
 //}
+
+//#include <vector>
+//#include <algorithm>
+//#include <cstdlib>
+//int n;
+//int main()
+//{
+//	cin >> n; // n = 3~8)
+//	vector<int>a(n);
+//	for (int i = 0; i < n; i++)
+//		cin >> a[i];
+//	sort(a.begin(), a.end());
+//	int sum = 0;
+//	while (next_permutation(a.begin(), a.end())) {
+//		//for (int i = 0; i < n; i++)cout << a[i] << ' '; cout << '\n';
+//		int sum1 = 0;
+//		for (int i = 0; i <= n - 2; i++) {
+//			sum1 += abs(a[i] - a[i + 1]);
+//		}
+//		if (sum1 > sum)sum = sum1;
+//	}
+//	cout << sum;
+//}
+
+/* 10971 TSP 외판원 문제 */
+//int n;
+//int MIN = 2147483647;
+//bool c[10];
+//void go(int** w, int* a, int index)
+//{
+//	if (index >= n) {
+//		int sum = 0;
+//		for (int i = 0; i < n - 1; i++) {
+//			if (w[a[i]][a[i + 1]] == 0)return; // i도시에서 i + 1 도시까지 길이 없음
+//			sum += w[a[i]][a[i + 1]];
+//		}
+//		if (w[a[n - 1]][a[0]] == 0)return;
+//		sum += w[a[n - 1]][a[0]];
+//		if (sum < MIN) MIN = sum;
+//		return;
+//	}
+//	for (int i = 0; i < n; i++) {
+//		if (c[i])continue;
+//		a[index] = i;
+//		c[i] = true;
+//		go(w, a, index + 1);
+//		c[i] = false;
+//	}
+//}
+//
+//int main()
+//{
+//	cin >> n;
+//	int** w = new int*[n];
+//	for (int i = 0; i < n; i++)
+//		w[i] = new int[n];
+//	for (int i = 0; i < n; i++) {
+//		for (int j = 0; j < n; j++) {
+//			cin >> w[i][j];
+//		}
+//	}
+//	int* a = new int[n];
+//	go(w, a, 0);
+//	cout << MIN;
+//}
+/* TSP문제 내부함수 이용, 시간단축 */
+//#include <algorithm>
+//#include <vector>
+//int n;
+//int MIN = 2147483647;
+//int main()
+//{
+//	cin >> n;
+//	int** w = new int*[n];
+//	for (int i = 0; i < n; i++)
+//		w[i] = new int[n];
+//	for (int i = 0; i < n; i++) {
+//		for (int j = 0; j < n; j++) {
+//			cin >> w[i][j];
+//		}
+//	}
+//	vector<int>a(n);
+//	for (int i = 0; i < n; i++)a[i] = i;
+//	do {
+//		int sum = 0;
+//		bool ok = true;
+//		for (int i = 0; i < n - 1; i++) {
+//			if (w[a[i]][a[i + 1]] == 0)ok = false;
+//			sum += w[a[i]][a[i + 1]];
+//		}
+//		if (w[a[n - 1]][a[0]] == 0)ok = false;
+//		sum += w[a[n - 1]][a[0]];
+//		if (ok == true && sum < MIN) MIN = sum;
+//	} while (next_permutation(a.begin() + 1, a.end())); // 순환하므로 첫 도시를 고정해도 된다.
+//	cout << MIN;
+//}
+
+/* 6603 permutation을 이용한 조합문제 풀기 */
+#include <vector>
+#include <algorithm>
+int n;
+int main()
+{
+	while (cin >> n) {
+		if (n == 0)break;
+		int* a = new int[n];
+		for (int i = 0; i < n; i++) {
+			cin >> a[i];
+		}
+		vector<int>OK;
+		/*for (int i = 0; i < n; i++) {
+			if (i < 6)OK[i] = 1;
+			else OK[i] = 0;
+		}*/
+		for (int i = 0; i < 6; i++)OK.push_back(1);
+		for (int i = 0; i < n - 6; i++)OK.push_back(0);
+		int* ary = new int[6];
+		do {
+			int cnt = 0;
+			for (int i = 0; i < n; i++) {
+				if (OK[i] == 1) {
+					ary[cnt++] = a[i];
+				}
+			}
+			for (int i = 0; i < 6; i++)cout << ary[i] << ' '; cout << '\n';
+		} while (prev_permutation(OK.begin(), OK.end()));
+		cout << '\n';
+	}
+}
