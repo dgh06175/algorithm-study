@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 using namespace std;
 
@@ -36,7 +37,7 @@ using namespace std;
 //			}
 //		}
 //	}
-//} 
+//}
 
 /* 백준 4375 */
 //int main(void)
@@ -389,7 +390,7 @@ using namespace std;
 //			break;
 //		}
 //	}
-//} 
+//}
 
 /* 1107 */
 //bool broken[10];
@@ -434,7 +435,6 @@ using namespace std;
 //	}
 //	cout << ans;
 //}
-
 
 ///* 14500번 */
 //int paper[500][500];
@@ -516,7 +516,7 @@ using namespace std;
 //		for (int j = 0; j < m; j++) {
 //			cin >> paper[i][j];
 //		}
-//	}	
+//	}
 //	int max = 0;
 //	for (int i = 0; i < n; i++) {
 //		for (int j = 0; j < m; j++) {
@@ -608,7 +608,6 @@ using namespace std;
 //	count += (n - (int)pow(10, len - 1) + 1) * len;
 //	cout << count;
 //}
-
 
 ///* 15649 */
 //bool c[10]; int a[10];
@@ -860,7 +859,7 @@ using namespace std;
 //	go(timeline, 0, 1);
 //	cout << total_Pay;
 //
-//	
+//
 //
 //	for (int i = 0; i < n; i++) {
 //		delete[] timeline[i];
@@ -1365,21 +1364,28 @@ using namespace std;
 //int n;
 //int MIN = 2147483647;
 //bool c[10];
-//void go(int** w, int* a, int index)
+//void go(int **w, int *a, int index)
 //{
-//	if (index >= n) {
+//	if (index >= n)
+//	{
 //		int sum = 0;
-//		for (int i = 0; i < n - 1; i++) {
-//			if (w[a[i]][a[i + 1]] == 0)return; // i도시에서 i + 1 도시까지 길이 없음
+//		for (int i = 0; i < n - 1; i++)
+//		{
+//			if (w[a[i]][a[i + 1]] == 0)
+//				return; // i도시에서 i + 1 도시까지 길이 없음
 //			sum += w[a[i]][a[i + 1]];
 //		}
-//		if (w[a[n - 1]][a[0]] == 0)return;
+//		if (w[a[n - 1]][a[0]] == 0)
+//			return;
 //		sum += w[a[n - 1]][a[0]];
-//		if (sum < MIN) MIN = sum;
+//		if (sum < MIN)
+//			MIN = sum;
 //		return;
 //	}
-//	for (int i = 0; i < n; i++) {
-//		if (c[i])continue;
+//	for (int i = 0; i < n; i++)
+//	{
+//		if (c[i])
+//			continue;
 //		a[index] = i;
 //		c[i] = true;
 //		go(w, a, index + 1);
@@ -1389,16 +1395,19 @@ using namespace std;
 //
 //int main()
 //{
+//
 //	cin >> n;
-//	int** w = new int*[n];
+//	int **w = new int *[n];
 //	for (int i = 0; i < n; i++)
 //		w[i] = new int[n];
-//	for (int i = 0; i < n; i++) {
-//		for (int j = 0; j < n; j++) {
+//	for (int i = 0; i < n; i++)
+//	{
+//		for (int j = 0; j < n; j++)
+//		{
 //			cin >> w[i][j];
 //		}
 //	}
-//	int* a = new int[n];
+//	int *a = new int[n];
 //	go(w, a, 0);
 //	cout << MIN;
 //}
@@ -1434,35 +1443,194 @@ using namespace std;
 //	cout << MIN;
 //}
 
-/* 6603 permutation을 이용한 조합문제 풀기 */
+///* 6603 permutation을 이용한 조합문제 풀기 */
+//#include <vector>
+//#include <algorithm>
+//int n;
+//int main()
+//{
+//	while (cin >> n) {
+//		if (n == 0)break;
+//		int* a = new int[n];
+//		for (int i = 0; i < n; i++) {
+//			cin >> a[i];
+//		}
+//		vector<int>OK;
+//		/*for (int i = 0; i < n; i++) {
+//			if (i < 6)OK[i] = 1;
+//			else OK[i] = 0;
+//		}*/
+//		for (int i = 0; i < 6; i++)OK.push_back(1);
+//		for (int i = 0; i < n - 6; i++)OK.push_back(0);
+//		int* ary = new int[6];
+//		do {
+//			int cnt = 0;
+//			for (int i = 0; i < n; i++) {
+//				if (OK[i] == 1) {
+//					ary[cnt++] = a[i];
+//				}
+//			}
+//			for (int i = 0; i < 6; i++)cout << ary[i] << ' '; cout << '\n';
+//		} while (prev_permutation(OK.begin(), OK.end()));
+//		cout << '\n';
+//	}
+//}
+
+/* 11723 비트마스크 */
+//int main()
+//{
+//	int n;
+//	scanf("%d", &n);
+//	int s = 0;
+//	char str[7] = { 0, };
+//	int i;
+//	while (n--)
+//	{
+//		scanf("%s", &str);
+//		if (str[1] == 'd') { // add
+//			scanf("%d", &i);
+//			s |= (1 << i);
+//		}
+//		else if (str[0] == 'r') { // remove
+//			scanf("%d", &i);
+//			s &= ~(1 << i);
+//		}
+//		else if (str[0] == 'c') { // check
+//			scanf("%d", &i);
+//			if ((s & (1 << i)) == 0) cout << 0 << '\n';
+//			else cout << 1 << '\n';
+//		}
+//		else if (str[0] == 't') { // toggle
+//			scanf("%d", &i);
+//			s ^= (1 << i);
+//		}
+//		else if (str[1] == 'l') { // all
+//			s = 2097150;
+//		}
+//		else if (str[0] == 'e') { // empty
+//			s = 0;
+//		}
+//	}
+//}
+
+/* 1182 */
+//#include <vector>
+//using namespace std;
+//int main()
+//{
+//	int n, s, cnt = 0;
+//	cin >> n >> s;
+//	vector<int>arr(n);
+//	for (int i = 0; i < n; i++) {
+//		cin >> arr[i];
+//	}
+//	for (int i = 1; i < (1 << n); i++) {
+//		int sum = 0;
+//		for (int k = 0; k < n; k++) {
+//			if (i & (1 << k)) {
+//				sum += arr[k];
+//			}
+//		}
+//		if (sum == s)cnt += 1;
+//	}
+//	cout << cnt;
+//}
+
+/* 14391 비트마스크 이용 */
+//#include <vector>
+//#include <cstdio>
+//int main()
+//{
+//	int n, m, MAX = 0;
+//	cin >> n >> m;
+//	vector<vector<int>>arr(n, vector<int>(m,0)); // arr[n][m]인 벡터 선언
+//	for (int i = 0; i < n; i++) {
+//		for (int j = 0; j < m; j++) {
+//			scanf("%1d", &arr[i][j]);
+//		}
+//	}
+//	/*for (int i = 0; i < n; i++) {
+//		for (int j = 0; j < m; j++)
+//			cout << arr[i][j];
+//		cout << '\n';
+//	}*/
+//	for (int int_arr = 0; int_arr <= (1 << (n * m)); int_arr += 1) {
+//		int sum = 0;
+//		//일단 가로부터
+//		for (int i = 0; i < n; i++) {
+//			int cur = 0;
+//			for (int j = 0; j < m; j++) {
+//				if ((int_arr & (1 << (i * m + j))) == 0) {
+//					cur = cur * 10 + arr[i][j];
+//				}
+//				else {
+//					sum += cur;
+//					cur = 0;
+//				}
+//			}
+//			sum += cur;
+//		}
+//		for (int j = 0; j < m; j++) {
+//			int cur = 0;
+//			for (int i = 0; i < n; i++) {
+//				if ((int_arr & (1 << (i * m + j))) != 0) {
+//					cur = cur * 10 + arr[i][j];
+//				}
+//				else {
+//					sum += cur;
+//					cur = 0;
+//				}
+//			}
+//			sum += cur;
+//		}
+//		MAX = max(sum, MAX);
+//	}
+//	cout << MAX;
+//}
+
+//#include <vector>
+//#include <algorithm>
+//int main()
+//{
+//	vector<int> a = { 0,1,0,1,0,1,0,1 };
+//	int b = 0;
+//	do {
+//		b += 1;
+//	} while (next_permutation(a.begin(), a.end()));
+//	cout << b;
+//}
+
+/* 1463 다이나믹 프로그래밍 */
+//int Myfunc(int n, int cnt)
+//{
+//	int k;
+//	if (n == 1) {
+//		return cnt;
+//	}
+//	if (n % 3 == 0) {
+//		k = Myfunc(n / 3, cnt + 1);
+//		if (k < memo[n] + 1)memo[n] = k + 1;
+//	}
+//	if (n % 2 == 0) {
+//		k = Myfunc(n / 2, cnt + 1);
+//		if (k < memo[n] + 1)memo[n] = k + 1;
+//	}
+//	k = Myfunc(n / 2, cnt + 1);
+//	if (k < memo[n] + 1)memo[n] = k + 1;
+//}
+
 #include <vector>
-#include <algorithm>
-int n;
 int main()
 {
-	while (cin >> n) {
-		if (n == 0)break;
-		int* a = new int[n];
-		for (int i = 0; i < n; i++) {
-			cin >> a[i];
-		}
-		vector<int>OK;
-		/*for (int i = 0; i < n; i++) {
-			if (i < 6)OK[i] = 1;
-			else OK[i] = 0;
-		}*/
-		for (int i = 0; i < 6; i++)OK.push_back(1);
-		for (int i = 0; i < n - 6; i++)OK.push_back(0);
-		int* ary = new int[6];
-		do {
-			int cnt = 0;
-			for (int i = 0; i < n; i++) {
-				if (OK[i] == 1) {
-					ary[cnt++] = a[i];
-				}
-			}
-			for (int i = 0; i < 6; i++)cout << ary[i] << ' '; cout << '\n';
-		} while (prev_permutation(OK.begin(), OK.end()));
-		cout << '\n';
+	int n;
+	scanf("%d", &n);
+	vector<int>memo(3000001, 1000000);
+	//int ans = Myfunc(n, 0);
+	memo[1] = 1;
+	for (int i = 1; i <= n; i++) {
+		memo[i + 1] = min(memo[i + 1], memo[i] + 1);
+		memo[i * 2] = min(memo[i * 2], memo[i] + 1);
+		memo[i * 3] = min(memo[i * 3], memo[i] + 1);
 	}
+	printf("%d", memo[n] - 1);
 }
