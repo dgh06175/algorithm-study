@@ -1601,36 +1601,101 @@ using namespace std;
 //}
 
 /* 1463 다이나믹 프로그래밍 */
-//int Myfunc(int n, int cnt)
+//#include <vector>
+//int main()
 //{
-//	int k;
-//	if (n == 1) {
-//		return cnt;
+//	int n;
+//	scanf("%d", &n);
+//	vector<int>memo(3000001, 1000000);
+//	//int ans = Myfunc(n, 0);
+//	memo[1] = 0;
+//	for (int i = 1; i <= n; i++) {
+//		memo[i + 1] = min(memo[i + 1], memo[i] + 1);
+//		memo[i * 2] = min(memo[i * 2], memo[i] + 1);
+//		memo[i * 3] = min(memo[i * 3], memo[i] + 1);
 //	}
-//	if (n % 3 == 0) {
-//		k = Myfunc(n / 3, cnt + 1);
-//		if (k < memo[n] + 1)memo[n] = k + 1;
-//	}
-//	if (n % 2 == 0) {
-//		k = Myfunc(n / 2, cnt + 1);
-//		if (k < memo[n] + 1)memo[n] = k + 1;
-//	}
-//	k = Myfunc(n / 2, cnt + 1);
-//	if (k < memo[n] + 1)memo[n] = k + 1;
+//	printf("%d", memo[n]);
 //}
 
-#include <vector>
+/* 11726 */
+//int d[1001] = { 0, 1, 2, };
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	for (int i = 3; i <= n; i++) {
+//		d[i] = (d[i - 1]  + d[i - 2] ) % 10007 ;
+//	}
+//	cout << d[n];// % (long long)10007;
+//}
+
+/* 11727 */
+//int d[1000] = { 0, 1, 3 };
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	for (int i = 3; i <= n; i++) {
+//		d[i] = (d[i - 1] + 2 * d[i - 2]) % 10007;
+//	}
+//	cout << d[n];
+//}
+
+//#include <time.h>
+//#include <vector>
+//int main()
+//{
+//	//clock_t start, end;
+//	int n;
+//	cin >> n;
+//	vector<int>a(n);
+//	for (int i = 0; i < n; i++) {
+//		cin >> a[i];
+//	}
+//	vector<int>b(2 * n + 1, 0);
+//	bool check = false;
+//	for (int i = 0; i < n; i++) {
+//		if (b[a[i] - n]) check = true;
+//		else b[a[i] - n] = 1;
+//	}
+//	if (check) cout << "no";
+//	else cout << "yes";
+//}
+
+/* 9095 */
+//int main()
+//{
+//	int T, n;
+//	int a[11] = { 0,1,2,4, };
+//	cin >> T;
+//	for (int i = 0; i < T; i++) {
+//		cin >> n;
+//		for (int j = 4; j <= n; j++) {
+//			if (!a[j]) {
+//				a[j] = a[j - 3] + a[j - 2] + a[j - 1];
+//			}
+//		}
+//		cout << a[n] << '\n';
+//	}
+//}
+
+/* 11052 */
+#include <algorithm>
 int main()
 {
 	int n;
-	scanf("%d", &n);
-	vector<int>memo(3000001, 1000000);
-	//int ans = Myfunc(n, 0);
-	memo[1] = 1;
+	cin >> n;
+	int* P = new int[n + 1];
+	P[0] = 0;
 	for (int i = 1; i <= n; i++) {
-		memo[i + 1] = min(memo[i + 1], memo[i] + 1);
-		memo[i * 2] = min(memo[i * 2], memo[i] + 1);
-		memo[i * 3] = min(memo[i * 3], memo[i] + 1);
+		cin >> P[i];
 	}
-	printf("%d", memo[n] - 1);
+	int* price = new int[n + 1];
+	for (int i = 1; i <= n; i++) {
+		price[i] = P[i];
+		for (int j = 1; j <= n / 2; j++) {
+			price[i] = max(price[i], price[j] + price[i - j]);
+		}
+	}
+	cout << price[n];
 }
