@@ -1680,22 +1680,73 @@ using namespace std;
 //}
 
 /* 11052 */
-#include <algorithm>
-int main()
-{
-	int n;
-	cin >> n;
-	int* P = new int[n + 1];
-	P[0] = 0;
-	for (int i = 1; i <= n; i++) {
-		cin >> P[i];
-	}
-	int* price = new int[n + 1];
-	for (int i = 1; i <= n; i++) {
-		price[i] = P[i];
-		for (int j = 1; j <= n / 2; j++) {
-			price[i] = max(price[i], price[j] + price[i - j]);
-		}
-	}
-	cout << price[n];
-}
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	int* P = new int[n + 1];
+//	P[0] = 0;
+//	for (int i = 1; i <= n; i++) {
+//		cin >> P[i];
+//	}
+//	int* price = new int[n + 1];
+//	for (int i = 1; i <= n; i++) {
+//		price[i] = P[i];
+//		for (int j = 1; j <= i; j++) {
+//			price[i] = max(price[i], P[j] + price[i - j]);
+//		}
+//	}
+//	cout << price[n];
+//}
+
+///* 16194 위에문제 최소로 변경 */
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	int* P = new int[n + 1];
+//	P[0] = 0;
+//	for (int i = 1; i <= n; i++) {
+//		cin >> P[i];
+//	}
+//	int* price = new int[n + 1];
+//	for (int i = 1; i < n + 1; i++) {
+//		price[i] = 10000000;
+//	}
+//	price[0] = 0;
+//	for (int i = 1; i <= n; i++) {
+//		for (int j = 1; j <= i; j++) {
+//			price[i] = min(price[i], P[j] + price[i - j]);
+//		}
+//	}
+//	cout << price[n];
+//}
+
+///* 15990 */
+//#include <cstdio>
+//const int limit = 100001;
+//long long D[limit + 1][4];
+//const long long mod = 1000000009LL;
+//int main()
+//{
+//	int T;
+//	scanf("%d",&T);
+//	D[1][1] = 1;
+//	D[2][2] = 1;
+//	D[3][3] = 1;
+//	for (int i = 3; i <= limit; i++) {
+//		if (D[i][1] == 0)D[i][1] = (D[i - 1][2] + D[i - 1][3]) % mod;
+//		if (D[i][2] == 0)D[i][2] = (D[i - 2][1] + D[i - 2][3]) % mod;
+//		if (D[i][3] == 0)D[i][3] = (D[i - 3][1] + D[i - 3][2]) % mod;
+//	}
+//	while (T--) {
+//		int n;
+//		scanf("%d",&n);
+//		printf("%lld\n",(D[n][1] + D[n][2] + D[n][3]) % mod);
+//	} // 시간 4ms
+//	/*while (T--) {
+//		int n;
+//		cin >> n;
+//		cout << (D[n][1] + D[n][2] + D[n][3]) % mod << '\n';
+//	}*/ // 시간 104ms
+//}
