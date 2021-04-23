@@ -1750,3 +1750,132 @@ using namespace std;
 //		cout << (D[n][1] + D[n][2] + D[n][3]) % mod << '\n';
 //	}*/ // 시간 104ms
 //}
+
+/* 10844 */
+//const long long mod = 1000000000LL;
+//int a[101][10];
+//int main()
+//{
+//	for (int i = 1; i <= 9; i++)a[1][i] = 1;
+//
+//	for (int n = 2; n <= 100; n++) {
+//		a[n][1] += a[n - 1][0] % mod;
+//		for (int i = 1; i <= 8; i++) {
+//			a[n][i - 1] += a[n - 1][i] % mod;
+//			a[n][i + 1] += a[n - 1][i] % mod;
+//		}
+//		a[n][8] += a[n - 1][9] % mod;
+//	}
+//
+//	int N;
+//	cin >> N;
+//	long long sum = 0;
+//	for (int i = 0; i < 10; i++)sum += a[N][i];
+//	cout << sum % mod;
+
+
+/* 2193 */
+//long long a[91][2];
+//int main()
+//{
+//	a[1][1] = 1;
+//	for (int n = 2; n <= 90; n++) {
+//		a[n][0] = a[n - 1][0] + a[n - 1][1];
+//		a[n][1] = a[n - 1][0];
+//	}
+//	int N;
+//	cin >> N;
+//	cout << a[N][0] + a[N][1];
+//}
+
+/* 11053 */
+//#include <vector>
+////int b[1000][2];
+//int main()
+//{
+//	int N;
+//	cin >> N;
+//	vector<int>a(N);
+//	vector<vector<int>>b(N, vector<int>(2, 0));
+//	for (int i = 0; i < N; i++) {
+//		cin >> a[i];
+//	}
+//	b[0][0] = 1;
+//	b[0][1] = a[0];
+//	int j = 0;
+//	for (int i = 1; i < N; i++) {
+//		cout << '\n';
+//		cout << i << "번째 부분 검사중\n";
+//		if (a[i - 1] > a[i]) { // 다음 수가 작아졌을때 b[]다음 배열 생성
+//			j += 1;
+//			cout << j << "번째 새로운 수열 검사 시작\n";
+//		} 
+//		b[j][0] += 1;
+//		b[j][1] = a[i];
+//		for (int q = 0; q <= j; q++) {
+//			if (a[i] > b[q][1]) {
+//				b[q][0] += 1;
+//				b[q][1] = a[i];
+//				cout << "b[" << q << "][0]은 +1되어   " << b[q][0] << "이 됨.\n";
+//				cout << "b[" << q << "][1]은 a[i]값인 " << b[q][1] << "이 됨.\n";
+//			}
+//		}
+//	}
+//	int MAX = 0;
+//	int p;
+//	for (int i = 0; i < N; i++) {
+//		if (MAX < b[i][0]) {
+//			MAX = b[i][0];
+//			p = i;
+//		}
+//	}
+//	cout << "b[" << p << "][0]이 최대이고, 값은 " << MAX;
+//}
+
+#include <vector>
+int main()
+{
+	int N;
+	cin >> N;
+	vector<int>a(N);
+	vector<int>d(N);
+	vector<int>c(N, -1);
+	int k = 0;
+	bool cnt = false;
+	for (int i = 0; i < N; i++) {
+		cin >> a[i];
+	}
+	for (int i = 0; i < N; i++) {
+		int MAX = 0;
+		int x = -1;
+		int j;
+		for (j = 0; j < i; j++) {
+			if (a[j] < a[i]) {
+				if (MAX < d[j]) {
+					MAX = d[j];
+					x = j;
+				}
+			}
+		}
+		//여기서 d[x]가 MAX일때의 x는 이전 수열중 d최대인 곳의 index, max가 0이면 없음
+		c[i] = x;
+		d[i] = MAX + 1;
+	}
+	int ans = 0;
+	int ans_index = -1;
+	for (int i = 0; i < N; i++) {
+		if (ans < d[i]) {
+			ans = d[i];
+			ans_index = i;
+		}
+	}
+	cout << ans << '\n';
+	vector<int>arr(ans);
+	for (int i = 0; i < ans; i++) {
+		arr[i] = a[ans_index];
+		ans_index = c[ans_index];
+	}
+	for (int i = ans - 1; i >= 0; i--) {
+		cout << arr[i] << ' ';
+	}
+}
