@@ -1832,50 +1832,168 @@ using namespace std;
 //	cout << "b[" << p << "][0]이 최대이고, 값은 " << MAX;
 //}
 
-#include <vector>
+/* 14002 */
+//#include <vector>
+//int main()
+//{
+//	int N;
+//	cin >> N;
+//	vector<int>a(N);
+//	vector<int>d(N);
+//	vector<int>c(N, -1);
+//	int k = 0;
+//	bool cnt = false;
+//	for (int i = 0; i < N; i++) {
+//		cin >> a[i];
+//	}
+//	for (int i = 0; i < N; i++) {
+//		int MAX = 0;
+//		int x = -1;
+//		int j;
+//		for (j = 0; j < i; j++) {
+//			if (a[j] < a[i]) {
+//				if (MAX < d[j]) {
+//					MAX = d[j];
+//					x = j;
+//				}
+//			}
+//		}
+//		//여기서 d[x]가 MAX일때의 x는 이전 수열중 d최대인 곳의 index, max가 0이면 없음
+//		c[i] = x;
+//		d[i] = MAX + 1;
+//	}
+//	int ans = 0;
+//	int ans_index = -1;
+//	for (int i = 0; i < N; i++) {
+//		if (ans < d[i]) {
+//			ans = d[i];
+//			ans_index = i;
+//		}
+//	}
+//	cout << ans << '\n';
+//	vector<int>arr(ans);
+//	for (int i = 0; i < ans; i++) {
+//		arr[i] = a[ans_index];
+//		ans_index = c[ans_index];
+//	}
+//	for (int i = ans - 1; i >= 0; i--) {
+//		cout << arr[i] << ' ';
+//	}
+//}
+
+/* 1912 */
+//#include <vector>
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	vector<int>a(n);
+//	vector<int>d(n);
+//	for (int i = 0; i < n; i++)cin >> a[i];
+//	int ans = d[0] = a[0];
+//	for (int i = 1; i < n; i++) {
+//		d[i] = a[i];
+//		if (d[i - 1] > 0)d[i] += d[i - 1];
+//		if (ans < d[i])ans = d[i];
+//	}
+//	cout << ans;
+//} 
+
+/* 1699 */
+//#include <vector>
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	vector<int>d(100001);
+//	d[0] = 0;
+//	for (int i = 1; i <= 100000; i++) {
+//		int MIN = d[i - 1];
+//		for (int j = 1; j <= 316; j++) {
+//			if (i >= j * j) {
+//				MIN = min(MIN, d[i - j * j]);
+//			}
+//		}
+//		d[i] = MIN + 1;
+//	}
+//	cout << d[n];
+//}
+
+/* 2225 */
+//#include <vector>
+//// 점화식 : d[n][k] += d[t][k-1] (0 <= t <= n)
+//const int mod = 1000000000;
+//int main()
+//{
+//	ios::sync_with_stdio(false);
+//	cin.tie(0);
+//	cout.tie(0);
+//	int n, k;
+//	cin >> n >> k;
+//	vector<vector<int>>d(n + 1, vector<int>(k + 1, 0));
+//	/*for (int i = 0; i < n + 1; i++) {
+//		d[i][1] = 1;
+//	}*/
+//	d[0][0] = 1;
+//	for (int i = 0; i < n + 1; i++) {
+//		for (int j = 1; j < k + 1; j++) {
+//			for (int p = 0; p < i + 1; p++) {
+//				d[i][j] += d[p][j - 1];
+//				d[i][j] %= mod;
+//			}
+//		}
+//	}
+//	cout << d[n][k] % mod;
+//}
+
+/* 14501 */
+//int a[16][2];
+//int d[16];
+//// 점화식 : d[n] = max(a[k][1] + d[k - 1]) (1 <= t <= n)
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	for (int i = 1; i <= n; i++) {
+//		cin >> a[i][0] >> a[i][1];
+//	}
+//	for (int i = 1; i <= n; i++) {
+//		for (int j = 1; j <= i; j++) {
+//			if (a[j][0] + j - 1 <= i) {
+//				d[i] = max(d[i], a[j][1] + d[j - 1]);
+//			}
+//		}
+//	}
+//	cout << d[n];
+//}
+
+/* 15988 */
+//#include <cstdio>
+//long long a[1000001] = { 0, 1, 2, 4, };
+//const long long mod = 1000000009LL;
+//int main()
+//{
+//	int t, n;
+//	scanf("%d", &t);
+//	for (int i = 4; i <= 1000000; i++) {
+//		a[i] = (a[i - 1] + a[i - 2] + a[i - 3]) % mod;
+//	}
+//	while (t--)
+//	{
+//		scanf("%d", &n);
+//		printf("%lld\n", a[n]);
+//	}
+//}
+
+/* 1149 */
+#include <cstdio>
+int a[1001][3];
+int d[1001];
 int main()
 {
-	int N;
-	cin >> N;
-	vector<int>a(N);
-	vector<int>d(N);
-	vector<int>c(N, -1);
-	int k = 0;
-	bool cnt = false;
-	for (int i = 0; i < N; i++) {
-		cin >> a[i];
-	}
-	for (int i = 0; i < N; i++) {
-		int MAX = 0;
-		int x = -1;
-		int j;
-		for (j = 0; j < i; j++) {
-			if (a[j] < a[i]) {
-				if (MAX < d[j]) {
-					MAX = d[j];
-					x = j;
-				}
-			}
-		}
-		//여기서 d[x]가 MAX일때의 x는 이전 수열중 d최대인 곳의 index, max가 0이면 없음
-		c[i] = x;
-		d[i] = MAX + 1;
-	}
-	int ans = 0;
-	int ans_index = -1;
-	for (int i = 0; i < N; i++) {
-		if (ans < d[i]) {
-			ans = d[i];
-			ans_index = i;
-		}
-	}
-	cout << ans << '\n';
-	vector<int>arr(ans);
-	for (int i = 0; i < ans; i++) {
-		arr[i] = a[ans_index];
-		ans_index = c[ans_index];
-	}
-	for (int i = ans - 1; i >= 0; i--) {
-		cout << arr[i] << ' ';
+	int n;
+	scanf("%d", &n);
+	for (int i = 1; i <= n; i++) {
+		scanf("%d %d %d", &a[i][0], &a[i][1], &a[i][2]);
 	}
 }
