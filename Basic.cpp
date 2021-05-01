@@ -1986,14 +1986,63 @@ using namespace std;
 //}
 
 /* 1149 */
-#include <cstdio>
-int a[1001][3];
-int d[1001];
+//int a[1001][3];
+//int d[1001][3];
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	for (int i = 1; i <= n; i++) {
+//		cin >> a[i][0] >> a[i][1] >> a[i][2];
+//	}
+//	for (int i = 1; i <= n; i++) {
+//		d[i][0] = min(d[i - 1][1], d[i - 1][2]) + a[i][0];
+//		d[i][1] = min(d[i - 1][0], d[i - 1][2]) + a[i][1];
+//		d[i][2] = min(d[i - 1][0], d[i - 1][1]) + a[i][2];
+//	}
+//	cout << min(d[n][0], min(d[n][1], d[n][2]));
+//}
+
+/* 1309 */
+//#include <vector>
+//const int mod = 9901;
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	vector<vector<int>>d(n + 1, vector<int>(3, 0));
+//	d[1][0] = 1;
+//	d[1][1] = 1;
+//	d[1][2] = 1;
+//	for (int i = 2; i <= n; i++) {
+//		d[i][0] = d[i - 1][1] + d[i - 1][2] % mod; // 왼쪽 칸에 사자 있는 경우
+//		d[i][1] = d[i - 1][0] + d[i - 1][2] % mod; // 오른쪽 칸에 사자 있는 경우
+//		d[i][2] = d[i - 1][0] + d[i - 1][1] + d[i - 1][2] % mod; // 사자가 없는 경우
+//	}
+//	cout << (d[n][0] + d[n][1] + d[n][2]) % mod;
+//}
+
+/* 11057 */
+int d[1001][10];
+const int mod = 10007;
 int main()
 {
 	int n;
-	scanf("%d", &n);
+	cin >> n;
 	for (int i = 1; i <= n; i++) {
-		scanf("%d %d %d", &a[i][0], &a[i][1], &a[i][2]);
+		for (int j = 0; j <= 9; j++) {
+			if (i == 1) {
+				d[i][j] = 1;
+				continue;
+			}
+			for (int k = j; k <= 9; k++) {
+				d[i][j] = (d[i][j] + d[i - 1][k]) % mod;
+			}
+		}
 	}
+	int sum = 0;
+	for (int i = 0; i <= 9; i++) {
+		sum += d[n][i];
+	}
+	cout << sum % mod;
 }
