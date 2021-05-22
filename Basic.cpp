@@ -2023,26 +2023,205 @@ using namespace std;
 //}
 
 /* 11057 */
-int d[1001][10];
-const int mod = 10007;
+//int d[1001][10];
+//const int mod = 10007;
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	for (int i = 1; i <= n; i++) {
+//		for (int j = 0; j <= 9; j++) {
+//			if (i == 1) {
+//				d[i][j] = 1;
+//				continue;
+//			}
+//			for (int k = j; k <= 9; k++) {
+//				d[i][j] = (d[i][j] + d[i - 1][k]) % mod;
+//			}
+//		}
+//	}
+//	int sum = 0;
+//	for (int i = 0; i <= 9; i++) {
+//		sum += d[n][i];
+//	}
+//	cout << sum % mod;
+//}
+
+/* 2156 */
+//#include <vector>
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	vector<int>a(n + 1);
+//	vector<vector<int>>d(n + 1, vector<int>(3, 0));
+//	for (int i = 1; i <= n; i++) {
+//		cin >> a[i];
+//	}
+//	d[1][0] = 0;
+//	d[1][1] = a[1];
+//	for (int i = 2; i <= n; i++) {
+//		d[i][0] = max(d[i - 1][0], max(d[i - 1][1], d[i - 1][2]));
+//		d[i][1] = d[i - 1][0] + a[i];
+//		d[i][2] = d[i - 1][1] + a[i];
+//	}
+//	cout << max(d[n][0], max(d[n][1], d[n][2]));
+//}
+
+/* 1932 */
+//int a[500][500];
+//int d[500][500];
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	for (int i = 0; i < n; i++) {
+//		for (int j = 0; j <= i; j++) {
+//			cin >> a[i][j];
+//		}
+//	}
+//	d[0][0] = a[0][0];
+//	for (int i = 1; i < n; i++) {
+//		for (int j = 0; j <= i; j++) {
+//			if (j == 0) {
+//				d[i][j] = d[i - 1][j] + a[i][j];
+//			}
+//			else if (j == i) {
+//				d[i][j] = d[i - 1][j - 1] + a[i][j];
+//			}
+//			else {
+//				d[i][j] = max(d[i - 1][j - 1], d[i - 1][j]) + a[i][j];
+//			}
+//		}
+//	}
+//	int MAX = 0;
+//	for (int i = 0; i < n; i++) {
+//		if (MAX < d[n-1][i])MAX = d[n-1][i];
+//	}
+//	cout << MAX;
+//}
+
+/* 11055 */
+//int a[1000];
+//int d[1000];
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	for (int i = 0; i < n; i++) {
+//		cin >> a[i];
+//	}
+//	for (int i = 0; i < n; i++) {
+//		int MAX = 0;
+//		for (int j = 0; j < i; j++) {
+//			if (a[j] < a[i]) {
+//				if (d[j] > MAX)MAX = d[j];
+//			}
+//		}
+//		d[i] = MAX + a[i];
+//	}
+//	int MAX = 0;
+//	for (int i = 0; i < n; i++) {
+//		if (d[i] > MAX)MAX = d[i];
+//	}
+//	cout << MAX;
+//}
+
+/* 11722 d[i] = a[i]에서 끝나는 가장 긴 감소하는 수열 */
+//int main()
+//{
+//	int n;
+//	int a[1000];
+//	int d[1000];
+//	cin >> n;
+//	for (int i = 0; i < n; i++) {
+//		cin >> a[i];
+//	}
+//	for (int i = 0; i < n; i++) {
+//		int MAX = 0;
+//		for (int j = 0; j < i; j++) {
+//			if (a[j] > a[i] && d[j] > MAX) {
+//				MAX = d[j];
+//			}
+//		}
+//		d[i] = MAX + 1;
+//	}
+//	int MAX = 0;
+//	for (int i = 0; i < n; i++) {
+//		if (MAX < d[i])MAX = d[i];
+//	}
+//	cout << MAX;
+//}
+
+/* 11722 d[i] = a[i]에서 시작하는 가장 긴 감소하는 수열 */
+//int main()
+//{
+//	int n;
+//	int a[1000];
+//	int d[1000];
+//	cin >> n;
+//	for (int i = 0; i < n; i++) {
+//		cin >> a[i];
+//	}
+//	d[n - 1] = 1;
+//	for (int i = n - 2; i >= 0; i--) {
+//		int MAX = 0;
+//		for (int j = i + 1; j < n; j++) {
+//			if (a[i] > a[j] && d[j] > MAX) {
+//				MAX = d[j];
+//			}
+//		}
+//		d[i] = MAX + 1;
+//	}
+//
+//	int MAX = 0;
+//	for (int i = 0; i < n; i++) {
+//		if (MAX < d[i])MAX = d[i];
+//	}
+//	cout << MAX;
+//}
+
+/* 11054 */
+//int a[1000];
+//int d1[1000];
+//int d2[1000];
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	for (int i = 0; i < n; i++) {
+//		cin >> a[i];
+//	}
+//	for (int i = 0; i < n; i++) // a[i]로 끝나는 증가하는 수열
+//	{
+//		int MAX = 0;
+//		for (int j = 0; j < i; j++) {
+//			if (a[j] < a[i] && d1[j] > MAX) {
+//				MAX = d1[j];
+//			}
+//		}
+//		d1[i] = MAX + 1;
+//	}
+//
+//	for (int i = n - 1; i >= 0; i--) // a[i]로 시작하는 감소하는 수열
+//	{
+//		int MAX = 0;
+//		for (int j = i + 1; j < n; j++) {
+//			if (a[i] > a[j] && d2[j] > MAX) {
+//				MAX = d2[j];
+//			}
+//		}
+//		d2[i] = MAX + 1;
+//	}
+//	int MAX = 0;
+//	for (int i = 0; i < n; i++) {
+//		MAX = max(MAX, d1[i] + d2[i]);
+//	}
+//	cout << MAX - 1;
+//}
+
+/* 13398 */
 int main()
 {
-	int n;
-	cin >> n;
-	for (int i = 1; i <= n; i++) {
-		for (int j = 0; j <= 9; j++) {
-			if (i == 1) {
-				d[i][j] = 1;
-				continue;
-			}
-			for (int k = j; k <= 9; k++) {
-				d[i][j] = (d[i][j] + d[i - 1][k]) % mod;
-			}
-		}
-	}
-	int sum = 0;
-	for (int i = 0; i <= 9; i++) {
-		sum += d[n][i];
-	}
-	cout << sum % mod;
+
 }
