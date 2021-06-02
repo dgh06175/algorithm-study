@@ -2221,7 +2221,49 @@ using namespace std;
 //}
 
 /* 13398 */
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	int* d1 = new int[n];
+//	int* d2 = new int[n];
+//	int* a = new int[n];
+//	for (int i = 0; i < n; i++) {
+//		cin >> a[i];
+//	}
+//	d1[0] = a[0];
+//	d2[n - 1] = a[n - 1];
+//	for (int i = 1; i < n; i++) {
+//		d1[i] = a[i];
+//		if (d1[i - 1] > 0)d1[i] += d1[i - 1];
+//	}
+//	for (int i = n - 2; i >= 0; i--) {
+//		d2[i] = a[i];
+//		if (d2[i + 1] > 0)d2[i] += d2[i + 1];
+//	}
+//	int ans = a[0];
+//	for (int i = 0; i < n; i++) {
+//		if (ans < d1[i])ans = d1[i];
+//		if (ans < d2[i])ans = d2[i];
+//	}
+//	for (int i = 0; i < n - 2; i++) {
+//		if (ans < d1[i] + d2[i + 2])ans = d1[i] + d2[i + 2];
+//	}
+//	cout << ans;
+//}
+
+/* 2133 */
 int main()
 {
-
+	int n;
+	cin >> n;
+	int* d = new int[n + 1]();
+	d[0] = 1;
+	for (int i = 2; i <= n; i++) {
+		d[i] = d[i - 2] * 3;
+		for (int j = 4; j <= i; j+=2) {
+			d[i] += d[i - j] * 2;
+		}
+	}
+	cout << d[n];
 }
