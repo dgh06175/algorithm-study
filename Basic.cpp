@@ -2365,28 +2365,48 @@ using namespace std;
 //	return End - Begin;
 //}
 
-/* 13023 */
-#include <vector>
-vector<int>a[2000];
-bool b[1000][1000];
+///* 13023 */
+//#include <vector>
+//#include <algorithm>
+//bool b[2000][2000];
+//vector<int>a[2000];
+//int main()
+//{
+//	int n, m;
+//	cin >> n >> m;
+//	int p, q;
+//	while (m--) {
+//		cin >> p >> q;
+//		a[p].push_back(q);
+//		a[q].push_back(p);
+//		// 인접 리스트
+//		b[p][q] = b[q][p] = true;
+//		// 인접 행렬
+//	}
+//	/*for (int i = 0; i < n; i++) {
+//		for (int j = 0; j < n; j++) {
+//			cout << b[i][j] << ' ';
+//		}
+//		cout << '\n';
+//	}
+//	cout << a[5][0];*/
+//	for (int E : a[0]);
+//	for (int i = 0; i < n; i++) {
+//		for (int j = 0; j < (signed)a[i].size(); j++) {
+//			if (a[i][j]);
+//		}
+//	}
+//}
+#include <algorithm>
 int main()
 {
-	int n, m;
-	cin >> n >> m;
-	int p, q;
-	while (m--) {
-		cin >> p >> q;
-		a[p].push_back(q);
-		a[q].push_back(p);
-		// 인접 리스트
-		b[p][q] = b[q][p] = true;
-		// 인접 행렬
-	}
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++) {
-			cout << b[i][j] << ' ';
-		}
-		cout << '\n';
-	}
-	cout << a[5][0];
+	pair<int, char>p1;
+	pair<int, char>p2;
+	p1 = make_pair( 1, 'c' );
+	p2 = { 4, 'a' };
+	cout << p1.first;
+	cout << p2.second;
+	pair<pair<int, int>, int>p3;
+	p3 = { { 4, 2 }, 1 };
+};
 }
