@@ -2268,97 +2268,125 @@ using namespace std;
 //	cout << d[n];
 //}
 
-/* queue 구현 */
-void push(int) ;
-int pop(void);
-int front(void);
-int back(void);
-bool empty(void);
-int size(void);
+///* queue 구현 */
+//void push(int) ;
+//int pop(void);
+//int front(void);
+//int back(void);
+//bool empty(void);
+//int size(void);
+//
+//// 큐에 포함되어있는 내용은 begin부터 end-1 까지 이다.
+//int queue[10000];
+//int Begin = 0;
+//int End = 0;
+//
+//int main()
+//{
+//	int n;
+//	while (1) {
+//		cout << "/*************************************************/\n";
+//		cout << "1. queue보기\n2. qush\n3. pop\n4. front\n5. back\n6. empty\n7. size\n8. exit\n";
+//		cout << "/*************************************************/\n";
+//		cout << "숫자를 입력하시오: ";
+//		cin >> n;
+//		switch (n) {
+//		case 1:
+//			cout << '\n';
+//			for (int i = Begin; i < End; i++) {
+//				cout << queue[i] << ' ';
+//			}
+//			cout << "\n\n";
+//			break;
+//		case 2:
+//			int data;
+//			cout << "push할 data를 입력하세요: ";
+//			cin >> data;
+//			push(data);
+//			cout << '\n';
+//			break;
+//		case 3:
+//			cout << pop() << "이 push되어 나왔습니다.\n";
+//			break;
+//		case 4:
+//			cout << "front값은 " << front() << "입니다.\n";
+//			break;
+//		case 5:
+//			cout << "back값은 " << back() << "입니다.\n";
+//			break;
+//		case 6:
+//			if (empty() == true)cout << "비어있습니다";
+//			else cout << "비어있지 않습니다";
+//			cout << '\n';
+//			break;
+//		case 7:
+//			cout << "queue의 사이즈는" << size() << "입니다.\n";
+//			break;
+//		case 8:
+//			return 0;
+//		}
+//	}
+//}
+//
+//void push(int data)
+//{
+//	queue[End++] = data;
+//}
+//
+//int pop(void)
+//{
+//	if (size() == 0)return 0;
+//	int data = queue[Begin];
+//	queue[Begin] = 0;
+//	Begin += 1;
+//	return data;
+//}
+//// 실제로 0번째 값을 지우고 한칸 씩 앞으로 이동하는 연산은 O(N)이 되므로, 지우면 안된다.
+//// vector로 구현해서 pop을 쓰면 지우는 연산을 하므로 vector로 queue 구현 X
+//
+//int front(void)
+//{
+//	return queue[Begin];
+//}
+//
+//int back(void)
+//{
+//	return queue[End - 1];
+//}
+//
+//bool empty(void)
+//{
+//	if (End == Begin)return true;
+//	else return false;
+//}
+//
+//int size(void)
+//{
+//	return End - Begin;
+//}
 
-// 큐에 포함되어있는 내용은 begin부터 end-1 까지 이다.
-int queue[10000];
-int Begin = 0;
-int End = 0;
-
+/* 13023 */
+#include <vector>
+vector<int>a[2000];
+bool b[1000][1000];
 int main()
 {
-	int n;
-	while (1) {
-		cout << "/*************************************************/\n";
-		cout << "1. queue보기\n2. qush\n3. pop\n4. front\n5. back\n6. empty\n7. size\n8. exit\n";
-		cout << "/*************************************************/\n";
-		cout << "숫자를 입력하시오: ";
-		cin >> n;
-		switch (n) {
-		case 1:
-			cout << '\n';
-			for (int i = Begin; i < End; i++) {
-				cout << queue[i] << ' ';
-			}
-			cout << "\n\n";
-			break;
-		case 2:
-			int data;
-			cout << "push할 data를 입력하세요: ";
-			cin >> data;
-			push(data);
-			cout << '\n';
-			break;
-		case 3:
-			cout << pop() << "이 push되어 나왔습니다.\n";
-			break;
-		case 4:
-			cout << "front값은 " << front() << "입니다.\n";
-			break;
-		case 5:
-			cout << "back값은 " << back() << "입니다.\n";
-			break;
-		case 6:
-			if (empty() == true)cout << "비어있습니다";
-			else cout << "비어있지 않습니다";
-			cout << '\n';
-			break;
-		case 7:
-			cout << "queue의 사이즈는" << size() << "입니다.\n";
-			break;
-		case 8:
-			return 0;
-		}
+	int n, m;
+	cin >> n >> m;
+	int p, q;
+	while (m--) {
+		cin >> p >> q;
+		a[p].push_back(q);
+		a[q].push_back(p);
+		// 인접 리스트
+		b[p][q] = b[q][p] = true;
+		// 인접 행렬
 	}
-}
-
-void push(int data)
-{
-	queue[End++] = data;
-}
-
-int pop(void)
-{
-	if (size() == 0)return 0;
-	int data = queue[Begin];
-	queue[Begin] = 0;
-	Begin += 1;
-	return data;
-}
-
-int front(void)
-{
-	return queue[Begin];
-}
-
-int back(void)
-{
-	return queue[End - 1];
-}
-
-bool empty(void)
-{
-	if (End == Begin)return true;
-	else return false;
-}
-
-int size(void)
-{
-	return End - Begin;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			cout << b[i][j] << ' ';
+		}
+		cout << '\n';
+	}
+	cout << a[5][0];
 }
