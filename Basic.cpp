@@ -2365,48 +2365,68 @@ using namespace std;
 //	return End - Begin;
 //}
 
-///* 13023 */
+/* 13023 */
 //#include <vector>
 //#include <algorithm>
 //bool b[2000][2000];
 //vector<int>a[2000];
+//vector<pair<int, int>>edges;
 //int main()
 //{
 //	int n, m;
 //	cin >> n >> m;
-//	int p, q;
-//	while (m--) {
-//		cin >> p >> q;
-//		a[p].push_back(q);
-//		a[q].push_back(p);
+//	for (int i = 0; i < m; i++) {
+//		int from, to;
+//		cin >> from >> to;
+//		edges.push_back({ from,to });
+//		edges.push_back({ to,from });
+//		// 모든 간선 저장
+//		a[from].push_back(to);
+//		a[to].push_back(from);
 //		// 인접 리스트
-//		b[p][q] = b[q][p] = true;
+//		b[from][to] = b[to][from] = true;
 //		// 인접 행렬
 //	}
-//	/*for (int i = 0; i < n; i++) {
-//		for (int j = 0; j < n; j++) {
-//			cout << b[i][j] << ' ';
+//	m *= 2; // 간선이 양방향이므로 (m = 간선의 개수)
+//	/* 찾아야 하는 조합: A -> B -> C -> D -> E */
+//	for (int i = 0; i < m; i++) {
+//		for (int j = 0; j < m; j++) {
+//			int A = edges[i].first;
+//			int B = edges[i].second;
+//			//i번째 간선의 A: 출발노드 B: 도착노드
+//			int C = edges[j].first;
+//			int D = edges[j].second;
+//			//j번째 간선의 A: 출발노드 B: 도착노드
+//			if (A == B || A == C || A == D || B == C || B == D || C == D)
+//				continue; // 조합에 들어가는 모든 노드가 다 다른 노드여야함
+//			// 여기서 A -> B 와 C -> D 는 완성
+//			if (!b[B][C])continue; // B -> C 성립 안할시 continue
+//			// 여기서 A -> B -> C -> D 완성
+//			for (int E : a[D]) {
+//				if (A == E || B == E || C == E || D == E) continue;
+//				// D에서 출발하는 간선 중에 A, B, C, D로 도착하는것은 넘기면 E가 있는것이다
+//				cout << 1 << '\n';
+//				return 0;
+//			}
 //		}
-//		cout << '\n';
 //	}
-//	cout << a[5][0];*/
-//	for (int E : a[0]);
-//	for (int i = 0; i < n; i++) {
-//		for (int j = 0; j < (signed)a[i].size(); j++) {
-//			if (a[i][j]);
-//		}
-//	}
+//	cout << 0 << '\n';
 //}
-#include <algorithm>
+
+//#include <algorithm>
+//int main()
+//{
+//	pair<int, char>p1;
+//	pair<int, char>p2;
+//	p1 = make_pair( 1, 'c' );
+//	p2 = { 4, 'a' };
+//	cout << p1.first;
+//	cout << p2.second;
+//	pair<pair<int, int>, int>p3;
+//	p3 = { { 4, 2 }, 1 };
+//}
+
 int main()
 {
-	pair<int, char>p1;
-	pair<int, char>p2;
-	p1 = make_pair( 1, 'c' );
-	p2 = { 4, 'a' };
-	cout << p1.first;
-	cout << p2.second;
-	pair<pair<int, int>, int>p3;
-	p3 = { { 4, 2 }, 1 };
-};
+	bool check[10];
 }
