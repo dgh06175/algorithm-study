@@ -2426,7 +2426,60 @@ using namespace std;
 //	p3 = { { 4, 2 }, 1 };
 //}
 
+/* 1260 */
+#include <algorithm>
+#include <cstdio>
+#include <queue> // DFS에서 queue 사용 위함
+#include <vector> // 인접 리스트에서 사용
+#include <cstring>
+bool check[1001];
+vector<int>g[1001]; // 인접 리스트 선언
+void DFS(int x) // x노드로 이동
+{
+	check[x] = true;
+	printf("%d ", x);
+	for (int i = 0; i < g[x].size(); i++) {
+		int y = g[x][i]; // x번 노드는 y노드로 갈 수 있다.
+		if (check[y] == false) { // y번 노드를 방문 안했다면
+			DFS(y); // y로 이동
+		}
+	}
+}
+
+void BFS(int x)
+{
+	queue<int>q;
+	check[x] = true;
+	printf("%d ", x);
+	q.push(x);
+	while (!q.empty()) { // q가 비어있지 않다면
+		int x = q.front(); q.pop(); // 맨 앞의 원소 가져오고 삭제
+		for (int i = 0; i < g[x].size(); i++) {
+			int y = g[x][i];
+			if (check[y] == false) {
+				check[y] = true; q.push(y);
+				printf("%d ", y);
+			}
+		}
+	}
+}
+
 int main()
 {
-	bool check[10];
+	int n, m, v;
+	scanf("%d %d %d", &n, &m, &v);
+	int from, to;
+	for (int i = 0; i < m; i++) {
+		scanf("%d %d", &from, &to);
+		g[from].push_back(to);
+		g[to].push_back(from);
+	}
+	for (int i = 1; i <= n; i++) {
+		sort(g[i].begin(), g[i].end());
+	}
+	DFS(v);
+	printf("\n");
+
+	memset(check, false, sizeof(check)); // DFS에서 사용한 check를 재사용하기 위해 초기화
+	BFS(v);
 }
