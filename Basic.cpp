@@ -2438,7 +2438,7 @@ using namespace std;
 //{
 //	check[x] = true;
 //	printf("%d ", x);
-//	for (int i = 0; i < g[x].size(); i++) {
+//	for (int i = 0; i < (int)g[x].size(); i++) {
 //		int y = g[x][i]; // x번 노드는 y노드로 갈 수 있다.
 //		if (check[y] == false) { // y번 노드를 방문 안했다면
 //			DFS(y); // y로 이동
@@ -2454,7 +2454,7 @@ using namespace std;
 //	q.push(x);
 //	while (!q.empty()) { // q가 비어있지 않다면
 //		int x = q.front(); q.pop(); // 맨 앞의 원소 가져오고 삭제
-//		for (int i = 0; i < g[x].size(); i++) {
+//		for (int i = 0; i < (int)g[x].size(); i++) {
 //			int y = g[x][i];
 //			if (check[y] == false) {
 //				check[y] = true; q.push(y);
@@ -2519,4 +2519,39 @@ using namespace std;
 //		count += 1;
 //	}
 //	cout << count;
+//}
+
+/* 1707 */
+#include <vector>
+#include <queue>
+#include <cstdio>
+vector<int>a[20001];
+bool bfs(int);
+int color[20001];
+int main()
+{
+	int k;
+	scanf("%d", &k);
+	while (k--) {
+		int v, e;
+		scanf("%d %d", &v, &e);
+		for (int i = 0; i < e; i++) {
+			int from, to;
+			scanf("%d %d", &from, &to);
+			a[from].push_back(to);
+			a[to].push_back(from);
+		}
+	}
+}
+// ㅇbfs 함수 복붙만 함
+//bool dfs(int x)
+//{
+//	color[x] = true; // 방문했다고 저장
+//	for (int i = 0; i < a[x].size(); i++) {
+//		int y = a[x][i];
+//		// 인접 리스트는 저장되있으면 간선이 있는것이므로 그냥 이동
+//		if (color[y] == false) {
+//			dfs(y); // i로 이동
+//		} // check[y] == false : i를 방문한 적이 없음
+//	}
 //}
