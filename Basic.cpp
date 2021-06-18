@@ -2521,37 +2521,99 @@ using namespace std;
 //	cout << count;
 //}
 
-/* 1707 */
-#include <vector>
-#include <queue>
-#include <cstdio>
-vector<int>a[20001];
-bool bfs(int);
-int color[20001];
-int main()
-{
-	int k;
-	scanf("%d", &k);
-	while (k--) {
-		int v, e;
-		scanf("%d %d", &v, &e);
-		for (int i = 0; i < e; i++) {
-			int from, to;
-			scanf("%d %d", &from, &to);
-			a[from].push_back(to);
-			a[to].push_back(from);
-		}
-	}
-}
-// ㅇbfs 함수 복붙만 함
-//bool dfs(int x)
+/* 1707 */ // 한 그래프의 모든 노드에서부터 시작해서 다 검사해야 했다. 한군데만 하면 안됨
+//#include <vector>
+//#include <cstdio>
+//#include <algorithm>
+//bool dfs(int, int);
+//
+//vector<int>a[20001];
+//int color[20001]; // 0이면 방문안함, 1이면 A, 2면 B
+//int main()
 //{
-//	color[x] = true; // 방문했다고 저장
+//	int k;
+//	scanf("%d\n", &k);
+//	while (k--) {
+//		int v, e;
+//		scanf("%d %d", &v, &e);
+//		for (int i = 1; i <= v; i++) {
+//			a[i].clear();
+//			color[i] = 0;
+//		}
+//		for (int i = 0; i < e; i++) {
+//			int from, to;
+//			scanf("%d %d", &from, &to);
+//			a[from].push_back(to);
+//			a[to].push_back(from);
+//		}
+//		bool OK = true;
+//		for (int i = 1; i <= v; i++) {
+//			if (color[i] == 0) {
+//				if (dfs(i, 1) == false)OK = false;
+//			}
+//		}
+//		printf("%s\n", OK ? "YES" : "NO");
+//	}
+//}
+//
+//bool dfs(int x, int col)
+//{
+//	color[x] = col;
 //	for (int i = 0; i < a[x].size(); i++) {
 //		int y = a[x][i];
 //		// 인접 리스트는 저장되있으면 간선이 있는것이므로 그냥 이동
-//		if (color[y] == false) {
-//			dfs(y); // i로 이동
-//		} // check[y] == false : i를 방문한 적이 없음
+//		if (color[y] == 0) {
+//			if (!dfs(y, 3 - col)) {
+//				return false;
+//			}
+//		}
+//		else if (color[y] == color[x]) {
+//			return false;
+//		}
 //	}
+//	return true;
 //}
+
+/* 2667 */
+#include <vector>
+#include <cstdio>
+char ary[26][26];
+vector<int>a[26 * 26];
+int k;
+// 각 방의 번호는 ((i+1) * k) + j+1
+int num(int i, int j)
+{
+	return ((i + 1) * k) + j + 1;
+}
+
+int main()
+{
+	scanf("%d", &k);
+	for (int i = 0; i < k; i++) {
+		scanf("%s", ary[i]);
+	}
+	for (int i = 0; i < k; i++) {
+		for (int j = 0; j < k; j++) {
+			if (i > 0) {
+				if (ary[i][j] == 1 && ary[i - 1][j] == 1) {
+					a[num(i, j)].push_back(num(i - 1, j));
+				}
+			}
+			if (i < k - 1) {
+				if (ary[i][j] == 1 && ary[i + 1][j] == 1) {
+					a[num(i, j)].push_back(num(i + 1, j));
+				}
+			}
+			if (j > 0) {
+				if (ary[i][j] == 1 && ary[i][j - 1] == 1) {
+					a[num(i, j)].push_back(num(i, j - 1));
+				}
+			}
+			if (j < k - 1) {
+				if (ary[i][j] == 1 && ary[i][j + 1] == 1) {
+					a[num(i, j)].push_back(num(i, j + 1));
+				}
+			}
+		}
+	}
+}
