@@ -2574,46 +2574,95 @@ using namespace std;
 //	return true;
 //}
 
-/* 2667 */
-#include <vector>
-#include <cstdio>
-char ary[26][26];
-vector<int>a[26 * 26];
-int k;
-// 각 방의 번호는 ((i+1) * k) + j+1
-int num(int i, int j)
-{
-	return ((i + 1) * k) + j + 1;
-}
+/* 2667 혼자해본거 */
+//#include <vector>
+//#include <cstdio>
+//#include <queue>
+//#include <cstring>
+//#include <algorithm>
+//char ary[26][26];
+//vector<int>a[26 * 26];
+//int k, cnt;
+//bool check[26 * 26];
+//bool check1[26 * 26];
+//queue<int>q;
+//
+//// 각 방의 번호는 ((i+1) * k) + j+1
+//int num(int i, int j)
+//{
+//	return (i * k) + j;
+//}
+//
+//int main()
+//{
+//	scanf("%d", &k);
+//	for (int i = 0; i < k; i++) {
+//		scanf("%s", ary[i]);
+//	}
+//	for (int i = 0; i < k; i++) {
+//		for (int j = 0; j < k; j++) {
+//			if (ary[i][j] == '1') {
+//				if (i > 0 && ary[i - 1][j] == '1')a[num(i,j)].push_back(num(i-1,j));
+//				if (i < k - 1 && ary[i + 1][j] == '1')a[num(i, j)].push_back(num(i + 1, j));
+//				if (j > 0 && ary[i][j - 1] == '1')a[num(i, j)].push_back(num(i,j - 1));
+//				if (j < k - 1 && ary[i][j + 1] == '1')a[num(i, j)].push_back(num(i, j + 1));
+//				a[num(i, j)].push_back(num(i, j));
+//			}
+//		}
+//	}
+//	//for (int i = 0; i < k * k; i++) {
+//	//	printf("a[%d]의 크기는 %d.\n", i, a[i].size());
+//	//	for (int j = 0; j < a[i].size(); j++) {
+//	//		printf("%d는 %d와 연결됨.\n", i, a[i][j]);
+//	//	}
+//	//}
+//	vector<int>cntary;
+//	for (int i = 0; i < k * k; i++) {
+//		if (check1[i] == true || a[i].size() == 0) continue;
+//		int counting_house = 1;
+//		q = queue<int>(); // queue 초기화
+//		memset(check, false, sizeof(check)); // check 초기화
+//		check[i] = true; check1[i] = true; q.push(i);
+//		while (!q.empty()) {
+//			int x = q.front(); q.pop();
+//			for (int j = 0; j < a[x].size(); j++) {
+//				int y = a[x][j];
+//				if (check[y] == false) {
+//					check[y] = true; check1[y] = true; q.push(y);
+//					counting_house += 1;
+//				}
+//			}
+//		}
+//		//printf("%d가 카운트됨\n", i);
+//		cntary.push_back(counting_house);
+//		cnt += 1;
+//	}
+//	sort(cntary.begin(), cntary.end());
+//	printf("%d\n", cnt);
+//	for (int i = 0; i < cnt; i++) {
+//		printf("%d\n", cntary[i]);
+//	}
+//}
 
+/* 2667 힌트보고 한거 */
+#include <vector>
+#include <algorithm>
+#include <queue>
+#include <cstdio>
+int a[30][30];
+//void bfs(int a, int b, int c)
 int main()
 {
+	int k;
 	scanf("%d", &k);
 	for (int i = 0; i < k; i++) {
-		scanf("%s", ary[i]);
+		for (int j = 0; j < k; j++) {
+			scanf("%1d", &a[i][j]);
+		}
 	}
 	for (int i = 0; i < k; i++) {
 		for (int j = 0; j < k; j++) {
-			if (i > 0) {
-				if (ary[i][j] == 1 && ary[i - 1][j] == 1) {
-					a[num(i, j)].push_back(num(i - 1, j));
-				}
-			}
-			if (i < k - 1) {
-				if (ary[i][j] == 1 && ary[i + 1][j] == 1) {
-					a[num(i, j)].push_back(num(i + 1, j));
-				}
-			}
-			if (j > 0) {
-				if (ary[i][j] == 1 && ary[i][j - 1] == 1) {
-					a[num(i, j)].push_back(num(i, j - 1));
-				}
-			}
-			if (j < k - 1) {
-				if (ary[i][j] == 1 && ary[i][j + 1] == 1) {
-					a[num(i, j)].push_back(num(i, j + 1));
-				}
-			}
+			printf("%1d", a[i][j]);
 		}
 	}
 }
