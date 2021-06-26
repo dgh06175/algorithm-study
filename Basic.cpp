@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
+#include <cstdio>
 using namespace std;
 
 //int Digit(long long m)
@@ -2645,24 +2646,255 @@ using namespace std;
 //}
 
 /* 2667 힌트보고 한거 */
-#include <vector>
-#include <algorithm>
+//#include <vector>
+//#include <algorithm>
+//#include <queue>
+//#include <cstdio>
+//int A[30][30];
+//int group[30][30]; // check
+//int ans[25 * 25];
+//int dx[4] = { 0,0,-1,1 };
+//int dy[4] = { 1,-1,0,0 };
+//int k;
+//void bfs(int a, int b, int m)
+//{
+//	int countt = 0;
+//	queue<pair<int, int>>q;
+//	group[a][b] = m; q.push(make_pair(a, b));
+//	while (!q.empty()) {
+//		int x = q.front().first;
+//		int y = q.front().second;
+//		q.pop();
+//		for (int i = 0; i < 4; i++) {
+//			int nx = x + dx[i];
+//			int ny = y + dy[i];
+//			if (nx >= 0 && ny >= 0 && nx < k && ny < k) {
+//				if (A[nx][ny] == 1 && group[nx][ny] == 0) {
+//					group[nx][ny] = m;
+//					q.push(make_pair(nx, ny));
+//				}
+//			}
+//		}
+//	}
+//}
+//
+//int main()
+//{
+//	scanf("%d", &k);
+//	for (int i = 0; i < k; i++) {
+//		for (int j = 0; j < k; j++) {
+//			scanf("%1d", &A[i][j]);
+//		}
+//	}
+//	int cnt = 0;
+//	for (int i = 0; i < k; i++) {
+//		for (int j = 0; j < k; j++) {
+//			if (A[i][j] == 1 && group[i][j] == 0) {
+//				bfs(i, j, ++cnt);
+//			}
+//			ans[group[i][j]] += 1;
+//		}
+//	}
+//	printf("%d\n", cnt);
+//	sort(ans+1, ans + 1 + cnt);
+//	for (int i = 1; i <= cnt; i++) {
+//		printf("%d\n", ans[i]);
+//	}
+//}
+
+/* 2178 미로 최단경로 */
+//#include <queue>
+//#include <cstdio>
+//int a[100][100]; // 미로 기록
+//bool check[100][100];
+//int dist[100][100]; // 원점부터의 거리 기록
+//queue<pair<int, int>>q;
+//int dx[4] = { 1,-1,0,0 };
+//int dy[4] = { 0,0,1,-1 };
+//
+//int main()
+//{
+//	//입력받고, bfs를 이용해서 dist배열을 채운후, dist[n-1][m-1]의 숫자를출력한다.
+//	int n, m;
+//	scanf("%d %d", &n, &m);
+//	for (int i = 0; i < n; i++) {
+//		for (int j = 0; j < m; j++) {
+//			scanf("%1d", &a[i][j]);
+//		}
+//	}
+//	int x = 0, y = 0;
+//	dist[x][y] = 1;
+//	check[x][y] = true; q.push(make_pair(x, y));
+//	while (!q.empty()) {
+//		x = q.front().first;
+//		y = q.front().second;
+//		q.pop();
+//		for (int i = 0; i < 4; i++) {
+//			int nx = x + dx[i];
+//			int ny = y + dy[i];
+//			if (nx >= 0 && ny >= 0 && nx < n && ny < m) {
+//				if (a[nx][ny] == 1 && check[nx][ny] == false) {
+//					check[nx][ny] = true;
+//					dist[nx][ny] = dist[x][y] + 1;
+//					q.push(make_pair(nx, ny));
+//				}
+//			}
+//		}
+//	}
+//	//for (int i = 0; i < n; i++) {
+//	//	for (int j = 0; j < m; j++) {
+//	//		printf("%02d ", dist[i][j]);
+//	//	}
+//	//	printf("\n");
+//	//}
+//	printf("%d", dist[n - 1][m - 1]);
+//}
+
+///* 7576 */
+//#include <queue>
+//#include <cstdio>
+//#include <cstring>
+//#include <vector>
+//int a[1000][1000];
+//int days[1000][1000]; // 최종본
+//int days1[1000][1000]; // 각 시작점에서 시작할때 마다 사용할 배열
+//vector<pair<int, int>>rotten;
+//int dx[4] = { 1,-1,0,0 };
+//int dy[4] = { 0,0,1,-1 };
+//
+//int main()
+//{
+//	int n, m;
+//	scanf("%d %d", &n, &m);
+//	for (int i = 0; i < n; i++) {
+//		for (int j = 0; j < m; j++) {
+//			scanf("%d", &a[i][j]);
+//			if (a[i][j] == 1)rotten.push_back(make_pair(i, j));
+//		}
+//	}
+//	memset(days, -1, sizeof(days));
+//
+//	for (int k = 0; k < rotten.size(); k++) {
+//		memset(days1, -1, sizeof(days));
+//		queue<pair<int, int>>q;
+//
+//		int x = rotten[k].first;
+//		int y = rotten[k].second;
+//		q.push(make_pair(x, y));
+//		days1[x][y] = 0;
+//
+//		while (!q.empty()) {
+//			x = q.front().first;
+//			y = q.front().second;
+//			q.pop();
+//			for (int i = 0; i < 4; i++) {
+//				int nx = x + dx[i];
+//				int ny = y + dy[i];
+//				if (nx >= 0 && ny >= 0 && nx < n && ny < m) {
+//					if (a[nx][ny] == 0 && days1[nx][ny] == -1) {
+//						q.push(make_pair(nx, ny));
+//						days1[nx][ny] = days1[x][y] + 1;
+//					}
+//				}
+//			}
+//			printf("\n");
+//			printf("\n%d번째 days1\n", k);
+//			for (int i = 0; i < n; i++) {
+//				for (int j = 0; j < m; j++) {
+//					printf("%02d ", days1[i][j]);
+//				}
+//				printf("\n");
+//			}
+//		}
+//		if (k == 0) {
+//			for (int i = 0; i < n; i++) {
+//				for (int j = 0; j < m; j++) {
+//					days[i][j] = days1[i][j];
+//				}
+//			}
+//		}
+//		else {
+//			for (int i = 0; i < n; i++) {
+//				for (int j = 0; j < m; j++) {
+//					if (days[i][j] == -1) {
+//						days[i][j] = days1[i][j]; continue;
+//					}
+//					else if (days1[i][j] == -1) {
+//						continue;
+//					}
+//					days[i][j] = min(days[i][j],days1[i][j]);
+//				}
+//			}
+//		}
+//		// 마지막에 days랑 days1 각각 칸마다 작은값을 days에 넣어줘야함(최종본에)
+//	}
+//	printf("\n");
+//	printf("\n최종본\n");
+//	for (int i = 0; i < n; i++) {
+//		for (int j = 0; j < m; j++) {
+//			printf("%02d ", days[i][j]);
+//		}
+//		printf("\n");
+//	}
+//	printf("\n");
+//	printf("\n");
+//
+//	int ans = 0;
+//	for (int i = 0; i < n; i++) {
+//		for (int j = 0; j < m; j++) {
+//			if (days[i][j] == -1 && a[i][j] != -1) {
+//				printf("%d", -1);
+//				return 0;
+//			}
+//			ans = max(ans, days[i][j]);
+//		}
+//	}
+//	printf("%d", ans);
+//}
+
+/* 2178 미로 최단경로 */
 #include <queue>
-#include <cstdio>
-int a[30][30];
-//void bfs(int a, int b, int c)
+#include <cstring>
+bool check[301][301];
+int dist[301][301];
+queue<pair<int, int>>q;
+int dx[8] = { 1,2,-1,-2,-1,-2,1,2 };
+int dy[8] = { 2,1,2,1,-2,-1,-2,-1 };
+
 int main()
 {
 	int k;
-	scanf("%d", &k);
-	for (int i = 0; i < k; i++) {
-		for (int j = 0; j < k; j++) {
-			scanf("%1d", &a[i][j]);
+	cin >> k;
+	while (k--) {
+		memset(check, 0, sizeof(check));
+		memset(dist, 0, sizeof(dist));
+		int l, x, y, destx, desty, count = 0;
+		cin >> l;
+		cin >> x >> y >> destx >> desty;
+
+		check[x][y] = true; q.push(make_pair(x, y));
+		while (!q.empty()) {
+			x = q.front().first;
+			y = q.front().second;
+			q.pop();
+			for (int i = 0; i < 8; i++) {
+				int nx = x + dx[i];
+				int ny = y + dy[i];
+				if (nx >= 0 && ny >= 0 && nx < l && ny < l) {
+					if (check[nx][ny] == false) {
+						check[nx][ny] = true;
+						q.push(make_pair(nx, ny));
+						dist[nx][ny] = dist[x][y] + 1;
+					}
+				}
+			}
 		}
-	}
-	for (int i = 0; i < k; i++) {
-		for (int j = 0; j < k; j++) {
-			printf("%1d", a[i][j]);
-		}
-	}
+		//for (int i = 0; i < l; i++) {
+		//	for (int j = 0; j < l; j++) {
+		//		printf("%02d ", dist[i][j]);
+		//	}
+		//	printf("\n");
+		//}
+		cout << dist[destx][desty] << '\n';
+	} // while문 종료
 }
