@@ -2852,49 +2852,151 @@ using namespace std;
 //	printf("%d", ans);
 //}
 
-/* 2178 미로 최단경로 */
-#include <queue>
-#include <cstring>
-bool check[301][301];
-int dist[301][301];
-queue<pair<int, int>>q;
-int dx[8] = { 1,2,-1,-2,-1,-2,1,2 };
-int dy[8] = { 2,1,2,1,-2,-1,-2,-1 };
+///* 2178 미로 최단경로 */
+//#include <queue>
+//#include <cstring>
+//bool check[301][301];
+//int dist[301][301];
+//queue<pair<int, int>>q;
+//int dx[8] = { 1,2,-1,-2,-1,-2,1,2 };
+//int dy[8] = { 2,1,2,1,-2,-1,-2,-1 };
+//
+//int main()
+//{
+//	int k;
+//	cin >> k;
+//	while (k--) {
+//		memset(check, 0, sizeof(check));
+//		memset(dist, 0, sizeof(dist));
+//		int l, x, y, destx, desty, count = 0;
+//		cin >> l;
+//		cin >> x >> y >> destx >> desty;
+//
+//		check[x][y] = true; q.push(make_pair(x, y));
+//		while (!q.empty()) {
+//			x = q.front().first;
+//			y = q.front().second;
+//			q.pop();
+//			for (int i = 0; i < 8; i++) {
+//				int nx = x + dx[i];
+//				int ny = y + dy[i];
+//				if (nx >= 0 && ny >= 0 && nx < l && ny < l) {
+//					if (check[nx][ny] == false) {
+//						check[nx][ny] = true;
+//						q.push(make_pair(nx, ny));
+//						dist[nx][ny] = dist[x][y] + 1;
+//					}
+//				}
+//			}
+//		}
+//		//for (int i = 0; i < l; i++) {
+//		//	for (int j = 0; j < l; j++) {
+//		//		printf("%02d ", dist[i][j]);
+//		//	}
+//		//	printf("\n");
+//		//}
+//		cout << dist[destx][desty] << '\n';
+//	} // while문 종료
+//}
 
+/* 1697 */
+//#include <queue>
+//#define MAX 200000
+//int a[MAX + 1];
+//bool check[MAX + 1];
+//int dist[MAX + 1];
+//queue<int>q;
+//int main()
+//{
+//	int n, k;
+//	cin >> n >> k;
+//	int x = n;
+//	q.push(x); check[x] = true;
+//	while (!q.empty())
+//	{
+//		x = q.front(); q.pop();
+//		int nx;
+//		if (x < MAX) {
+//			nx = x + 1;
+//			if (check[nx] == false) {
+//				q.push(nx); check[nx] = true;
+//				dist[nx] = dist[x] + 1;
+//			}
+//		}
+//		if (x > 0) {
+//			nx = x - 1;
+//			if (check[nx] == false) {
+//				q.push(nx); check[nx] = true;
+//				dist[nx] = dist[x] + 1;
+//			}
+//		}
+//		if (x * 2 <= MAX) {
+//			nx = x * 2;
+//			if (check[nx] == false) {
+//				q.push(nx); check[nx] = true;
+//				dist[nx] = dist[x] + 1;
+//			}
+//		}
+//	}
+//	cout << dist[k];
+//}
+
+/* 13913 */
+#include <queue>
+#include <stack>
+#define MAX 200000
+int a[MAX + 1];
+bool check[MAX + 1];
+int dist[MAX + 1];
+queue<int>q;
+int from[MAX + 1];
 int main()
 {
-	int k;
-	cin >> k;
-	while (k--) {
-		memset(check, 0, sizeof(check));
-		memset(dist, 0, sizeof(dist));
-		int l, x, y, destx, desty, count = 0;
-		cin >> l;
-		cin >> x >> y >> destx >> desty;
-
-		check[x][y] = true; q.push(make_pair(x, y));
-		while (!q.empty()) {
-			x = q.front().first;
-			y = q.front().second;
-			q.pop();
-			for (int i = 0; i < 8; i++) {
-				int nx = x + dx[i];
-				int ny = y + dy[i];
-				if (nx >= 0 && ny >= 0 && nx < l && ny < l) {
-					if (check[nx][ny] == false) {
-						check[nx][ny] = true;
-						q.push(make_pair(nx, ny));
-						dist[nx][ny] = dist[x][y] + 1;
-					}
-				}
+	int n, k;
+	cin >> n >> k;
+	int x = n;
+	q.push(x); check[x] = true;
+	while (!q.empty())
+	{
+		x = q.front(); q.pop();
+		int nx;
+		if (x < MAX) {
+			nx = x + 1;
+			if (check[nx] == false) {
+				q.push(nx); check[nx] = true;
+				dist[nx] = dist[x] + 1;
+				from[nx] = x;
+				if (nx == k)break;
 			}
 		}
-		//for (int i = 0; i < l; i++) {
-		//	for (int j = 0; j < l; j++) {
-		//		printf("%02d ", dist[i][j]);
-		//	}
-		//	printf("\n");
-		//}
-		cout << dist[destx][desty] << '\n';
-	} // while문 종료
+		if (x > 0) {
+			nx = x - 1;
+			if (check[nx] == false) {
+				q.push(nx); check[nx] = true;
+				dist[nx] = dist[x] + 1;
+				from[nx] = x;
+				if (nx == k)break;
+			}
+		}
+		if (x * 2 <= MAX) {
+			nx = x * 2;
+			if (check[nx] == false) {
+				q.push(nx); check[nx] = true;
+				dist[nx] = dist[x] + 1;
+				from[nx] = x;
+				if (nx == k)break;
+			}
+		}
+	}
+	stack<int> ans;
+	cout << dist[k] << endl;
+	int l = k;
+	for (int i = k; i != n; i = from[i]) {
+		ans.push(i);
+	}
+	ans.push(n);
+	while(!ans.empty()) {
+		cout << ans.top() << ' ';
+		ans.pop();
+	}
 }
