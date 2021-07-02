@@ -2942,61 +2942,155 @@ using namespace std;
 //}
 
 /* 13913 */
-#include <queue>
-#include <stack>
-#define MAX 200000
-int a[MAX + 1];
-bool check[MAX + 1];
-int dist[MAX + 1];
-queue<int>q;
-int from[MAX + 1];
-int main()
-{
-	int n, k;
-	cin >> n >> k;
-	int x = n;
-	q.push(x); check[x] = true;
-	while (!q.empty())
-	{
-		x = q.front(); q.pop();
-		int nx;
-		if (x < MAX) {
-			nx = x + 1;
-			if (check[nx] == false) {
-				q.push(nx); check[nx] = true;
-				dist[nx] = dist[x] + 1;
-				from[nx] = x;
-				if (nx == k)break;
-			}
-		}
-		if (x > 0) {
-			nx = x - 1;
-			if (check[nx] == false) {
-				q.push(nx); check[nx] = true;
-				dist[nx] = dist[x] + 1;
-				from[nx] = x;
-				if (nx == k)break;
-			}
-		}
-		if (x * 2 <= MAX) {
-			nx = x * 2;
-			if (check[nx] == false) {
-				q.push(nx); check[nx] = true;
-				dist[nx] = dist[x] + 1;
-				from[nx] = x;
-				if (nx == k)break;
-			}
-		}
-	}
-	stack<int> ans;
-	cout << dist[k] << endl;
-	int l = k;
-	for (int i = k; i != n; i = from[i]) {
-		ans.push(i);
-	}
-	ans.push(n);
-	while(!ans.empty()) {
-		cout << ans.top() << ' ';
-		ans.pop();
-	}
-}
+//#include <queue>
+//#include <stack>
+//#define MAX 200000
+//int a[MAX + 1];
+//bool check[MAX + 1];
+//int dist[MAX + 1];
+//queue<int>q;
+//int from[MAX + 1];
+//int main()
+//{
+//	int n, k;
+//	cin >> n >> k;
+//	int x = n;
+//	q.push(x); check[x] = true;
+//	while (!q.empty())
+//	{
+//		x = q.front(); q.pop();
+//		int nx;
+//		if (x < MAX) {
+//			nx = x + 1;
+//			if (check[nx] == false) {
+//				q.push(nx); check[nx] = true;
+//				dist[nx] = dist[x] + 1;
+//				from[nx] = x;
+//				if (nx == k)break;
+//			}
+//		}
+//		if (x > 0) {
+//			nx = x - 1;
+//			if (check[nx] == false) {
+//				q.push(nx); check[nx] = true;
+//				dist[nx] = dist[x] + 1;
+//				from[nx] = x;
+//				if (nx == k)break;
+//			}
+//		}
+//		if (x * 2 <= MAX) {
+//			nx = x * 2;
+//			if (check[nx] == false) {
+//				q.push(nx); check[nx] = true;
+//				dist[nx] = dist[x] + 1;
+//				from[nx] = x;
+//				if (nx == k)break;
+//			}
+//		}
+//	}
+//	stack<int> ans;
+//	cout << dist[k] << endl;
+//	int l = k;
+//	for (int i = k; i != n; i = from[i]) {
+//		ans.push(i);
+//	}
+//	ans.push(n);
+//	while(!ans.empty()) {
+//		cout << ans.top() << ' ';
+//		ans.pop();
+//	}
+//}
+
+// 일단 bfs-2부터 강의만 봄
+
+/* 14449 */ // tmp하고 숫자값 옮길때 순서 주의하자. 막 하면 이상한값 들어간다
+// map[r][c] = 지도의 좌표
+// 주사위의 좌표 = [x][y];
+// map의 크기는 [n][m];
+// 
+//  주사위를 굴렸을때, 지도위 칸에 0이 쓰여있었으면 주사위 바닥면의 수가 칸에 복사된다.
+// 칸의 숫자가 0이 아니였으면 칸의 숫자가 주사위 바닥면으로 복사되며 칸의 숫자는 0이된다.
+// 주사위가 지도 위에서 움직일때 마다 주사위의 윗 칸의 번호를 구하라.
+//
+//#include <vector>
+//int dice[6];
+//int n, m, x, y;
+//bool dice_move(int direc)
+//{
+//	int tmp;
+//	switch (direc)
+//	{
+//	case 1: // 오른
+//		if (y + 1 > m - 1)return false;
+//		else y += 1;
+//		tmp = dice[0];
+//		dice[0] = dice[3];
+//		dice[3] = dice[5];
+//		dice[5] = dice[2];
+//		dice[2] = tmp;
+//		break;
+//	case 2: //왼
+//		if (y - 1 < 0)return false;
+//		else y -= 1;
+//		tmp = dice[0];
+//		dice[0] = dice[2];
+//		dice[2] = dice[5];
+//		dice[5] = dice[3];
+//		dice[3] = tmp;
+//		break;
+//	case 3: //위
+//		if (x - 1 < 0)return false;
+//		else x -= 1;
+//		tmp = dice[0];
+//		dice[0] = dice[4];
+//		dice[4] = dice[5];
+//		dice[5] = dice[1];
+//		dice[1] = tmp;
+//		break;
+//	case 4: //아래
+//		if (x + 1 > n - 1)return false;
+//		else x += 1;
+//		tmp = dice[0];
+//		dice[0] = dice[1];
+//		dice[1] = dice[5];
+//		dice[5] = dice[4];
+//		dice[4] = tmp;
+//		break;
+//	default:
+//		break;
+//	}
+//	return true;
+//}
+////   1
+//// 3 0 2
+////   4
+////   5
+//int main()
+//{
+//	int k;
+//	cin >> n >> m >> x >> y >> k;
+//	vector<vector<int>>map(n, vector<int>(m, 0));
+//	for (int i = 0; i < n; i++) {
+//		for (int j = 0; j < m; j++) {
+//			scanf("%d", &map[i][j]);
+//		}
+//	}
+//
+//	while (k--)
+//	{
+//		// 바닥면은 dice[5];
+//		int move;
+//		scanf("%d", &move); // 오른쪽, 왼쪽, 위쪽, 아래쪽
+//		if (dice_move(move) == false) {
+//			continue;
+//		}
+//		if (map[x][y] == 0) {
+//			map[x][y] = dice[5];
+//		}
+//		else {
+//			dice[5] = map[x][y];
+//			map[x][y] = 0;
+//		}
+//		printf("%d\n", dice[0]);
+//	}
+//}
