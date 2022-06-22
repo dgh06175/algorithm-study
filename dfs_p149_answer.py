@@ -11,7 +11,7 @@ def dfs(x, y):
   if x < 0 or y < 0 or x >= n or y >= m:
     return False
   if world[x][y] == 0:
-    world[x][y] = 1
+    world[x][y] = 1 # 방문그래프를 따로 쓰지않고 원래 맵을 사용해도 된다.
     for i in range(4):
       dfs(x + dx[i], y + dy[i])
     return True
