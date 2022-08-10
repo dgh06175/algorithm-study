@@ -1,35 +1,26 @@
-# n = 1 ~ 80000
-# 소의 키의 나열이 있다.
-# 어떤 소는 오른쪽으로 자신보다 크거나 같은 크기의 소가 나오기 전까지의 자신보다 작은 소만 볼 수있다.
-# 다이나믹프로그래밍 문제이다.
-
-# sumary[i]는 sumary[i+1] + 내가 보이는 녀석들
+# 앞에서부터 자신을 바라보는 소의 숫자를 기록하여 더해준다.
+# 앞에서 바라보는 소의 숫자를 구하려면
+# stack을 이용하여 뒤에 자신보다 큰 소의 수만 기록하면 된다. 그리고 자신보다 작은 소가 뒤에 있다면 그 작은 소의 정보를 없애버린다.
+#   0 1 2 3 4 5 6 -> 스택의 인덱스 번호 = 자기가 보이는 소의 수
+# 1.5
+# 2.5 2 (5가 자신보다 크니까 냅둠)
+# 3.5 4 (2가 자신보다 작으니까 없애고 5는 냅둠 -> 1마리가 보는중)
+# 4.5 4 2
+# 5.6 (모두 자신보다 작으니까 없애버림, 아무도 자기 머리 못봄)
+# 6.6 1
+# 각 단계마다 최대 인덱스를 모두 더하면 0+1+1+2+0+1 = 5
 
 n = int(input())
-ary = []
-for _ in range(n):
-  ary.append(int(input()))
+ary = [0] * n
+for i in range(n):
+  ary[i] = int(input())
 
-def dp(index, sumary, ary, n):
-  if index < 0:
-    return
-  x = 0
-  for i in range(index+1, n):
-    if ary[index] < ary[i]:
-      break
-    x+=1
-  sumary[index] = x + sumary[index + 1]
-  dp(index-1, sumary, ary, n)
+stack = [-1]
+ans = 0
+for i in range(n):
+  while stack and stack[-1] <= ary[i]:
+    stack.pop()
+  stack.append(ary[i])
+  ans += len(stack)-1
 
-  
-#    ary 5 2 4 2 6 1
-#  check 6 4 6 6 0 0
-# sumary 5 2 2 1 1 0
-sumary = [0] * n
-sumary[n-1] = 0
-dp(n-2, sumary, ary, n)
-print(sumary[0])
-
-
-
-    
+print(ans)
