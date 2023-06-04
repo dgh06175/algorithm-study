@@ -25,3 +25,4 @@ while not durability.count(0) >= k:
     isPeople[0] = True
 
 print(ans)
+
