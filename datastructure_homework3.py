@@ -63,7 +63,7 @@ class ShortestPath:
         path.reverse()
         path = map(str, path)
         print("->".join(path))
-        print(f"최단 경로의 길이 : {str(distance[end])}")
+        print(f"최단경로의 길이 : {str(distance[end])}")
 
 
 graph = [
