@@ -1,6 +1,11 @@
 # python_algorithm
-python algorithm using replit
 
-### 이것이 취업을 위한 코딩 테스트다 with 파이썬 - 나동빈
+python3 를 사용한 알고리즘 문제풀이 코드들을 정리한 저장소 입니다.
 
-### jungol.co.kr 충북대 SW중심대학 알고리즘 문제풀이
+# 참고자료
+
+[이것이 취업을 위한 코딩 테스트다 with 파이썬 - 나동빈](https://www.yes24.com/Product/Goods/91433923)
+
+[충북대 SW중심대학 알고리즘 문제풀이](http://jungol.co.kr)
+
+[프로그래머스](https://programmers.co.kr/)
