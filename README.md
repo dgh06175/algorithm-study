@@ -1,6 +1,6 @@
-# python_algorithm
+# Algorithm_study
 
-python3 를 사용한 알고리즘 문제풀이 코드들을 정리한 저장소 입니다.
+알고리즘 문제풀이 코드들을 정리한 저장소 입니다.
 
 # 참고자료
 
