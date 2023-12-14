@@ -10,4 +10,4 @@
 
 [프로그래머스](https://programmers.co.kr/)
 
-<a href="https://www.acmicpc.net/step" target="_blank">백준-단계별로 풀어보기</a>
+<a href="https://www.acmicpc.net/" target="_blank">백준</a>
