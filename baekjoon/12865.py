@@ -16,7 +16,8 @@ for i in range(1, n + 1):
     for w in range(0, W[i]):
         dp[i][w] = dp[i - 1][w]
     for w in range(W[i], k + 1):
-        dp[i][w] = max(dp[i - 1][w - W[i]] + V[i], dp[i - 1][w])
+        if w - W[i] >= 0:
+            dp[i][w] = max(dp[i - 1][w - W[i]] + V[i], dp[i - 1][w])
 
 max_num = 0
 for d in dp:
