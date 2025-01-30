@@ -7,15 +7,9 @@ class Solution {
     }
     
     private String convert(int time) {
-        String min = String.valueOf(time / 60);
-        if (min.length() == 1) {
-            min = "0" + min;
-        }
-        String sec = String.valueOf(time % 60);
-        if (sec.length() == 1) {
-            sec = "0" + sec;
-        }
-        return min + ":" + sec;
+        int min = time / 60;
+        int sec = time % 60;
+        return String.format("%02d:%02d", min, sec);
     }
     
     public String solution(String video_len, String pos, String op_start, String op_end, String[] commands) {
@@ -24,23 +18,16 @@ class Solution {
         int pos_sec = convert(pos);
         int op_end_sec = convert(op_end);
         
-        for(String command: commands) {
-            if (pos_sec >= op_start_sec && pos_sec <= op_end_sec) {
-                pos_sec = op_end_sec;
-            }
+        if (pos_sec >= op_start_sec && pos_sec <= op_end_sec) {
+            pos_sec = op_end_sec;
+        }
+        
+        for (String command: commands) {
             if (command.equals("next")) {
-                if (pos_sec + 10 >= video_len_sec) {
-                    pos_sec = video_len_sec;
-                } else {
-                    pos_sec += 10;
-                }
+                pos_sec = Math.min(pos_sec + 10, video_len_sec);
             }
             if (command.equals("prev")) {
-                if (pos_sec - 10 <= 0) {
-                    pos_sec = 0;
-                } else {
-                    pos_sec -= 10;
-                }
+                pos_sec = Math.max(pos_sec - 10, 0);
             }
             if (pos_sec >= op_start_sec && pos_sec <= op_end_sec) {
                 pos_sec = op_end_sec;
