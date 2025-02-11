@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 
 class Main
 {
@@ -55,20 +56,22 @@ class Main
 	
 	public static void main(String args[]) throws Exception
 	{
-		Scanner sc = new Scanner(System.in);
-		int N = sc.nextInt();
-		int M = sc.nextInt();
+		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		int N = Integer.valueOf(bf.readLine());
+		int M = Integer.valueOf(bf.readLine());
 		
 		UnionFind uf = new UnionFind(N + 1);
 		List<Edge> edges = new ArrayList<>();
 		while(M-- > 0) {
-			int a = sc.nextInt();
-			int b = sc.nextInt();
-			int c = sc.nextInt();
+			String[] line = bf.readLine().split(" ");
+			int a = Integer.valueOf(line[0]);
+			int b = Integer.valueOf(line[1]);
+			int c = Integer.valueOf(line[2]);
 			edges.add(new Edge(a, b, c));
 		}
 		
 		edges.sort((e1, e2) -> Integer.compare(e1.cost, e2.cost));
+		
 		int answer = 0;
 		int count = 0;
 		for(Edge edge: edges) {
