@@ -17,14 +17,12 @@ class Main
 	
 	static class UnionFind {
 		int[] parent;
-		int[] rank;
 		
 		UnionFind(int size) {
 			this.parent = new int[size];
 			for(int i = 0; i < size; i++) {
 				parent[i] = i;
 			}
-			this.rank = new int[size];
 		}
 		
 		int find(int x) {
@@ -41,16 +39,13 @@ class Main
 			if (rootA == rootB) {
 	            return false;
 	        }
-	        
-	        if (rank[rootA] < rank[rootB]) {
-	            parent[rootA] = rootB;
-	        } else if (rank[rootA] > rank[rootB]) {
-	            parent[rootB] = rootA;
-	        } else {
-	            parent[rootB] = rootA;
-	            rank[rootA]++;
-	        }
-	        return true;
+			
+			if (rootA <= rootB) {
+				parent[rootB] = rootA;
+			} else {
+				parent[rootA] = rootB;
+			}
+			return true;
 		}
 	}
 	
@@ -63,10 +58,10 @@ class Main
 		UnionFind uf = new UnionFind(N + 1);
 		List<Edge> edges = new ArrayList<>();
 		while(M-- > 0) {
-			String[] line = bf.readLine().split(" ");
-			int a = Integer.valueOf(line[0]);
-			int b = Integer.valueOf(line[1]);
-			int c = Integer.valueOf(line[2]);
+			StringTokenizer st = new StringTokenizer(bf.readLine());
+			int a = Integer.valueOf(st.nextToken());
+			int b = Integer.valueOf(st.nextToken());
+			int c = Integer.valueOf(st.nextToken());
 			edges.add(new Edge(a, b, c));
 		}
 		
