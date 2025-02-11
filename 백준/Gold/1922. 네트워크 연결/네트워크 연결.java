@@ -2,7 +2,7 @@ import java.util.*;
 
 class Main
 {
-	static class Edge{
+	static class Edge {
 		int from;
 		int to;
 		int cost;
@@ -21,26 +21,29 @@ class Main
 		int M = sc.nextInt();
 		
 		List<Edge> edges = new ArrayList<>();
-		
-		int[] parent = new int[N + 1];
-		for(int i = 0; i < N; i++) {
-			parent[i] = i;
-		}
-		
 		while(M-- > 0) {
 			int a = sc.nextInt();
 			int b = sc.nextInt();
 			int c = sc.nextInt();
-			
 			edges.add(new Edge(a, b, c));
+		}
+		
+		int[] parent = new int[N + 1];
+		int[] rank = new int[N + 1];
+		for(int i = 0; i < N + 1; i++) {
+			parent[i] = i;
 		}
 		
 		edges.sort((e1, e2) -> Integer.compare(e1.cost, e2.cost));
 		int answer = 0;
+		int count = 0;
 		for(Edge edge: edges) {
 			if (find(parent, edge.from) != find(parent, edge.to)) {
-				union(parent, edge.from, edge.to);
+				union(parent, rank, edge.from, edge.to);
 				answer += edge.cost;
+				if (count++ == N - 1) {
+					break;
+				}
 			}
 		}
 		System.out.println(answer);
@@ -50,16 +53,24 @@ class Main
 		if (parent[x] == x) {
 			return x;
 		}
-		
 		return parent[x] = find(parent, parent[x]);
 	}
 	
-	static void union(int[] parent, int a, int b) {
+	static void union(int[] parent, int[] rank, int a, int b) {
 		int rootA = find(parent, a);
 		int rootB = find(parent, b);
 		
-		if (rootA != rootB) {
-			parent[rootA] = rootB;
-		}
+		if (rootA == rootB) {
+            return;
+        }
+        
+        if (rank[rootA] < rank[rootB]) {
+            parent[rootA] = rootB;
+        } else if (rank[rootA] > rank[rootB]) {
+            parent[rootB] = rootA;
+        } else {
+            parent[rootB] = rootA;
+            rank[rootA]++;
+        }
 	}
 }
