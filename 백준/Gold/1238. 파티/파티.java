@@ -9,9 +9,9 @@ public class Main {
         int m = Integer.parseInt(st.nextToken());
         int x = Integer.parseInt(st.nextToken());
 
-        int[][] graph = new int[n + 1][n + 1];
-        for (int i = 0; i < n + 1; i++) {
-            Arrays.fill(graph[i], Integer.MAX_VALUE);
+        List<Edge>[] graph = new List[n + 1];
+        for (int i = 1; i <= n; i++) {
+            graph[i] = new ArrayList<>();
         }
 
         for (int i = 0; i < m; i++) {
@@ -19,7 +19,7 @@ public class Main {
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
             int c = Integer.parseInt(st.nextToken());
-            graph[a][b] = c;
+            graph[a].add(new Edge(b, c));
         }
 
         int[] minDistances = new int[n + 1];
@@ -36,12 +36,12 @@ public class Main {
         System.out.println(max);
     }
 
-    static int calcMinDistance(int[][] graph, int start, int n, int x) {
+    static int calcMinDistance(List<Edge>[] graph, int start, int n, int x) {
         int[] D = new int[n + 1];
         Arrays.fill(D, Integer.MAX_VALUE);
         D[start] = 0;
 
-        PriorityQueue<Node> queue = new PriorityQueue<>((n1, n2) -> Integer.compare(n1.dist, n2.dist));
+        PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingInt(n1 -> n1.dist));
         queue.offer(new Node(start, 0));
 
         while (!queue.isEmpty()) {
@@ -52,18 +52,15 @@ public class Main {
                 continue;
             }
 
-            for (int i = 1; i < n + 1; i++) {
-                if (graph[node][i] == Integer.MAX_VALUE) {
-                    continue;
-                }
-
-                int newDist = dist + graph[node][i];
-                if (newDist < D[i]) {
-                    D[i] = newDist;
-                    queue.offer(new Node(i, newDist));
+            for (Edge edge : graph[node]) {
+                int newDist = dist + edge.weight;
+                if (newDist < D[edge.to]) {
+                    D[edge.to] = newDist;
+                    queue.offer(new Node(edge.to, newDist));
                 }
             }
         }
+
         return D[x];
     }
 
@@ -74,6 +71,16 @@ public class Main {
         Node(int node, int dist) {
             this.node = node;
             this.dist = dist;
+        }
+    }
+
+    static class Edge {
+        int to;
+        int weight;
+
+        Edge(int to, int weight) {
+            this.to = to;
+            this.weight = weight;
         }
     }
 }
