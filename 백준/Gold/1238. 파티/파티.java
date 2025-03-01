@@ -54,26 +54,25 @@ public class Main {
     }
 
     private static int[] dijkstra(int n, int start, List<Edge>[] graph) {
-        // Queue<State> pq = new PriorityQueue<>((s1, s2) ->
-        // Integer.compare(s1.totalWeight, s2.totalWeight));
-        Queue<Integer> pq = new PriorityQueue<>();
-        // pq.offer(new State(start, 0));
-        pq.offer(start);
+        Queue<State> pq = new PriorityQueue<>((s1, s2) -> Integer.compare(s1.totalWeight, s2.totalWeight));
+        pq.offer(new State(start, 0));
         int[] d = new int[n + 1];
         Arrays.fill(d, Integer.MAX_VALUE - 1);
         d[start] = 0;
 
         while (!pq.isEmpty()) {
-            // State state = pq.poll();
-            int node = pq.poll();
-            // int node = state.node;
+            State state = pq.poll();
+            if (state.totalWeight > d[state.node]) {
+                continue;
+            }
+            int node = state.node;
 
             for (Edge next : graph[node]) {
                 int nextNode = next.to;
                 int newWeight = d[node] + next.weight;
                 if (d[nextNode] > newWeight) {
                     d[nextNode] = newWeight;
-                    pq.offer(nextNode);
+                    pq.offer(new State(nextNode, newWeight));
                 }
             }
         }
