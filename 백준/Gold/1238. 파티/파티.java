@@ -12,11 +12,11 @@ public class Main {
     }
 
     static class State {
-        int node, totalWeight;
+        int node, cost;
 
-        State(int node, int totalWeight) {
+        State(int node, int cost) {
             this.node = node;
-            this.totalWeight = totalWeight;
+            this.cost = cost;
         }
     }
 
@@ -54,7 +54,7 @@ public class Main {
     }
 
     private static int[] dijkstra(int n, int start, List<Edge>[] graph) {
-        Queue<State> pq = new PriorityQueue<>((s1, s2) -> Integer.compare(s1.totalWeight, s2.totalWeight));
+        Queue<State> pq = new PriorityQueue<>((s1, s2) -> Integer.compare(s1.cost, s2.cost));
         pq.offer(new State(start, 0));
         int[] d = new int[n + 1];
         Arrays.fill(d, Integer.MAX_VALUE - 1);
@@ -62,10 +62,12 @@ public class Main {
 
         while (!pq.isEmpty()) {
             State state = pq.poll();
-            if (state.totalWeight > d[state.node]) {
+            int node = state.node;
+            int cost = state.cost;
+
+            if (cost > d[node]) {
                 continue;
             }
-            int node = state.node;
 
             for (Edge next : graph[node]) {
                 int nextNode = next.to;
