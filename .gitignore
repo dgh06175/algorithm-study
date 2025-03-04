@@ -7,6 +7,9 @@ Main.java
 Main.class
 main.py
 
+# Code Runner
+tempCodeRunnerFile.java
+
 ### Git ###
 # Created by git for backups. To disable backups in Git:
 # $ git config --global mergetool.keepBackup false
@@ -27,6 +30,7 @@ main.py
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff
+.idea/
 .idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/**/usage.statistics.xml
