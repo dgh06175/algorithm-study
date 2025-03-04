@@ -12,7 +12,7 @@ public class Main {
         Arrays.sort(x);
 
         int start = 1;
-        int end = 1_000_000_000;
+        int end = x[n - 1] - x[0] + 1;
         int ans = -1;
         while (start <= end) {
             int mid = (start + end) / 2;
