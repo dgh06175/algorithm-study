@@ -16,9 +16,11 @@ public class Main {
 
     private static int calcHash(String str, int len) {
         int hash = 0;
+        int power = 1;
         for (int i = 0; i < len; i++) {
             int value = str.charAt(i) - 'a' + 1;
-            hash += (value * (int) Math.pow(R, i)) % M;
+            hash = (int) ((hash + (long) value * power) % M);
+            power = (int) ((long) power * R % M);
         }
         return hash % M;
     }
