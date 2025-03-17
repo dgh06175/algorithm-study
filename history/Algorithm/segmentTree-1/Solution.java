@@ -1,3 +1,5 @@
+package history.EXPERT.segmentTree;
+
 import java.util.*;
 import java.io.*;
 
