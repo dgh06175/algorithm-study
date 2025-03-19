@@ -51,9 +51,7 @@ public class Main {
             if (tree.size() == v)
                 break;
             for (Edge next : graph.get(cur.to)) {
-                if (!tree.contains(next.to)) {
-                    pq.offer(next);
-                }
+                pq.offer(next);
             }
         }
         return ans;
