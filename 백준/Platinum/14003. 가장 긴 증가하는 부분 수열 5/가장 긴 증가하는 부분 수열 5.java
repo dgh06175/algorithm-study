@@ -23,7 +23,7 @@ public class Main {
         int len = 1;
         for (int i = 1; i < n; i++) {
             if (lis[len - 1] >= ary[i]) {
-                int index = findIndex(lis, len, ary[i]);
+                int index = binarySearch(lis, len, ary[i]);
                 indexAry[i] = index;
                 lis[index] = ary[i]; // 덮어쓰기
             } else {
@@ -34,25 +34,29 @@ public class Main {
         System.out.println(len);
 
         int tmp = len - 1;
-        Stack<Integer> ansAry = new Stack<>();
+        Deque<Integer> ansAry = new LinkedList<>();
         for (int i = n - 1; i >= 0; i--) {
             if (indexAry[i] == tmp) {
-                ansAry.push(ary[i]);
+                ansAry.offerLast(ary[i]);
                 tmp--;
             }
         }
+        StringBuilder sb = new StringBuilder();
+
         while (!ansAry.isEmpty()) {
-            System.out.print(ansAry.pop() + " ");
+            sb.append(ansAry.pollLast()).append(" ");
         }
+
+        System.out.println(sb);
     }
 
-    private static int findIndex(int[] arr, int len, int target) {
+    private static int binarySearch(int[] lis, int len, int target) {
         int start = 0;
         int end = len - 1;
         int ans = len - 1;
         while (start <= end) {
             int mid = (start + end) / 2;
-            if (arr[mid] >= target) {
+            if (lis[mid] >= target) {
                 end = mid - 1;
                 ans = mid;
             } else {
