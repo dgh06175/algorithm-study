@@ -62,9 +62,6 @@ public class Main {
             return;
         }
 
-        int y = zeros.get(zeroIndex)[0];
-        int x = zeros.get(zeroIndex)[1];
-
         int[] pos = zeros.get(zeroIndex);
         int i = pos[0], j = pos[1];
         int blockIdx = getBlockIndex(i, j);
@@ -80,9 +77,9 @@ public class Main {
                 solve(board, zeros, zeroIndex + 1);
 
                 board[i][j] = 0;
-                rowUsed[i] ^= mask;
-                colUsed[j] ^= mask;
-                blockUsed[blockIdx] ^= mask;
+                rowUsed[i] &= ~mask;
+                colUsed[j] &= ~mask;
+                blockUsed[blockIdx] &= ~mask;
             }
         }
     }
