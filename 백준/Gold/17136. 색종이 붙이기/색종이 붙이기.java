@@ -28,16 +28,17 @@ public class Main {
 
     }
 
+    // 재귀를 위한 함수, 함수 하나당 하나의 스티커를 붙힌다.
     private static void myFunc(boolean[][] ary, int[] count) {
-        boolean isAllFalse = true;
+        boolean isAllFalse = true; // 모두 0인 상태인지 검사하기 위한 플래그
         for (int y = 0; y < N; y++) {
             for (int x = 0; x < N; x++) {
                 if (!ary[y][x]) {
                     continue;
                 }
                 isAllFalse = false;
-                for (int size = 5; size >= 1; size--) {
-                    if (count[size] < MAX_PAPER_COUNT && isValid(ary, y, x, size)) { // 5x5 되면 붙히기
+                for (int size = 1; size <= 5; size++) {
+                    if (isValid(ary, y, x, size, count)) { // 5x5 되면 붙히기
                         stickPaper(ary, y, x, size, count);
                         myFunc(ary, count);
                         unStickPaper(ary, y, x, size, count);
@@ -47,7 +48,7 @@ public class Main {
             }
         }
 
-        if (isAllFalse) {
+        if (isAllFalse) { // 붙힐 곳 없을 때
             int paperCount = 0;
             for (int i = 1; i <= MAX_PAPER_COUNT; i++) {
                 paperCount += count[i];
@@ -56,15 +57,19 @@ public class Main {
         }
     }
 
-    private static boolean isValid(boolean[][] ary, int y, int x, int size) {
-        if (y + size > N || x + size > N) {
+    // size 크기의 종이를 붙힐 수 있는지 검사하는 함수
+    private static boolean isValid(boolean[][] ary, int y, int x, int size, int[] count) {
+        if (count[size] >= MAX_PAPER_COUNT) { // 이미 5장 붙힌 크기이면 안됨
+            return false;
+        }
+        if (y + size > N || x + size > N) { // 종이 벗어나면 안됨
             return false;
         }
 
         boolean isValid = true;
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if (!ary[y + i][x + j]) {
+                if (!ary[y + i][x + j]) { // 0 있으면 안됨
                     isValid = false;
                 }
             }
@@ -72,6 +77,7 @@ public class Main {
         return isValid;
     }
 
+    // 종이 붙히는 함수, 동시에 크기별로 카운팅도 함
     private static void stickPaper(boolean[][] ary, int y, int x, int size, int[] count) {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -81,6 +87,7 @@ public class Main {
         count[size] += 1;
     }
 
+    // 종이 떼는 함수, 동시에 크기별로 카운팅도 되돌리기
     private static void unStickPaper(boolean[][] ary, int y, int x, int size, int[] count) {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
