@@ -82,10 +82,10 @@ public class Main {
      * @return 빨간색 공만 구멍에 들어갔으면 1, 파란색 공 구멍에 들어갔으면 2, 둘다 아니면 0 반환
      */
     static int tilt(char[][] arr, int d, Point red, Point blue) {
-        // 빨간공 기울기
         boolean redGoal = false;
         boolean blueGoal = false;
 
+        // 빨간공 기울기
         while (true) {
             int ny = red.y + dy[d];
             int nx = red.x + dx[d];
@@ -147,14 +147,5 @@ public class Main {
         char tmp = arr[y1][x1];
         arr[y1][x1] = arr[y2][x2];
         arr[y2][x2] = tmp;
-    }
-
-    static void printAry(char[][] ary) {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                System.out.print(ary[i][j]);
-            }
-            System.out.println();
-        }
     }
 }
