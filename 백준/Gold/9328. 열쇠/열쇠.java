@@ -19,7 +19,6 @@ public class Main {
             for (int i = 0; i < map.length; i++) {
                 Arrays.fill(map[i], '.');
             }
-
             for (int i = 0; i < h; i++) {
                 char[] input = br.readLine().toCharArray();
                 for (int j = 0; j < w; j++) {
@@ -36,16 +35,20 @@ public class Main {
                 keys.add(inputKeys[i]);
             }
 
-            int ans = getAllKey(map, keys);
-            System.out.println(ans);
+            System.out.println(getAllKey(map, keys));
         }
     }
 
     static int getAllKey(char[][] map, Set<Character> keys) {
+        int h = map.length, w = map[0].length;
         int ans = 0;
-        boolean[][] visited = new boolean[map.length][map[0].length];
-        Map<Character, List<int[]>> doorPos = new HashMap<>();
-        Queue<int[]> queue = new LinkedList<>();
+        boolean[][] visited = new boolean[h][w];
+        List<int[]>[] doors = new ArrayList[26];
+        for (int i = 0; i < 26; i++) {
+            doors[i] = new ArrayList<>();
+        }
+
+        Queue<int[]> queue = new ArrayDeque<>();
         queue.offer(new int[] { 0, 0 });
         visited[0][0] = true;
 
@@ -57,57 +60,32 @@ public class Main {
             for (int i = 0; i < 4; i++) {
                 int ny = y + dy[i];
                 int nx = x + dx[i];
-                if (ny < 0 || nx < 0 || ny >= map.length || nx >= map[0].length) {
+                if (ny < 0 || nx < 0 || ny >= h || nx >= w) {
                     continue;
                 }
-
-                if (visited[ny][nx]) {
-                    continue;
-                }
-
                 char c = map[ny][nx];
-                if (c == '*') {
+                if (visited[ny][nx] || c == '*') {
                     continue;
                 }
 
-                if (c == '.' && !visited[ny][nx]) {
-                    queue.offer(new int[] { ny, nx });
-                    visited[ny][nx] = true;
-                }
-
-                if ('A' <= c && c <= 'Z') {
-                    char doorKey = Character.toLowerCase(c);
-                    if (keys.contains(doorKey)) {
-                        queue.offer(new int[] { ny, nx });
-                        visited[ny][nx] = true;
-                    } else {
-                        if (doorPos.containsKey(doorKey)) {
-                            doorPos.get(doorKey).add(new int[] { ny, nx });
-                        } else {
-                            List<int[]> list = new ArrayList<>();
-                            list.add(new int[] { ny, nx });
-                            doorPos.put(doorKey, list);
-                        }
-                    }
-                }
-                if ('a' <= c && c <= 'z') {
-                    keys.add(c);
-                    if (doorPos.containsKey(c)) {
-                        for (int[] pos : doorPos.get(c)) {
-                            queue.offer(pos);
-                            visited[pos[0]][pos[1]] = true;
-                        }
-                    }
-                    map[ny][nx] = '.';
-                    queue.offer(new int[] { ny, nx });
-                    visited[ny][nx] = true;
-                }
                 if (c == '$') {
-                    map[ny][nx] = '.';
-                    ans += 1;
-                    queue.offer(new int[] { ny, nx });
-                    visited[ny][nx] = true;
+                    ans++;
+                } else if ('a' <= c && c <= 'z') {
+                    if (keys.add(c)) {
+                        for (int[] p : doors[c - 'a']) {
+                            queue.offer(p);
+                        }
+                    }
+                } else if ('A' <= c && c <= 'Z') {
+                    char lower = Character.toLowerCase(c);
+                    if (!keys.contains(lower)) {
+                        doors[lower - 'a'].add(new int[] { ny, nx });
+                        continue;
+                    }
                 }
+                map[ny][nx] = '.';
+                queue.offer(new int[] { ny, nx });
+                visited[ny][nx] = true;
             }
         }
 
