@@ -14,11 +14,7 @@ public class Main {
         }
         long[] ans = new long[] { ary[0], ary[1] };
         long minDiff = Math.abs(ary[0] + ary[1]);
-        Arrays.sort(ary);
-        // 모든 용액 돌면서
-        // 해당 용액과 더해서 가장 절댓값이 작은 용액 찾기 (ans에 저장)
-        // 그 절댓값이 가장 작은 용액 두 쌍을 찾아야 함 (minDiff)
-        // O(N)
+
         for (int i = 0; i < n; i++) {
             long x = ary[i];
             long y = find(ary, i);
@@ -37,8 +33,6 @@ public class Main {
         }
     }
 
-    // ary 중에 x 와 더해서 가장 절댓값이 작은 값 찾기
-    // O(log(N))
     private static long find(long[] ary, int index) {
         long x = ary[index];
         int start = 0;
