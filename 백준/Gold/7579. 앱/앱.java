@@ -9,32 +9,27 @@ public class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken()); // <= 100
         int M = Integer.parseInt(st.nextToken()); // <= 10,000,000
-        int[] m = new int[N + 1];
-        int[] c = new int[N + 1];
+        int[] m = new int[N];
+        int[] c = new int[N];
         st = new StringTokenizer(br.readLine());
-        for (int i = 1; i <= N; i++) {
+        for (int i = 0; i < N; i++) {
             m[i] = Integer.parseInt(st.nextToken()); // <= 10,000,000
         }
         st = new StringTokenizer(br.readLine());
-        for (int i = 1; i <= N; i++) {
+        for (int i = 0; i < N; i++) {
             c[i] = Integer.parseInt(st.nextToken()); // <= 100
         }
 
-        // M 바이트를 확보하기 위한 최소 c 비용 구하기
-        int mSum = Arrays.stream(c).sum();
-        int[][] dp = new int[N + 1][mSum + 1];
-        for (int i = 1; i <= N; i++) {
-            for (int j = 0; j <= mSum; j++) {
-                if (j >= c[i]) {
-                    dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - c[i]] + m[i]);
-                } else {
-                    dp[i][j] = dp[i - 1][j];
-                }
+        int cSum = Arrays.stream(c).sum();
+        long[] dp = new long[cSum + 1];
+        for (int i = 0; i < N; i++) {
+            for (int j = cSum; j >= c[i]; j--) {
+                dp[j] = Math.max(dp[j], dp[j - c[i]] + m[i]);
             }
         }
 
-        for (int i = 0; i <= mSum; i++) {
-            if (dp[N][i] >= M) {
+        for (int i = 0; i <= cSum; i++) {
+            if (dp[i] >= M) {
                 System.out.println(i);
                 return;
             }
