@@ -13,15 +13,14 @@ public class Main {
         for (int i = 0; i < n; i++) {
             ary[i] = Integer.parseInt(st.nextToken()); // -10억 ~ 10억
         }
-        Arrays.sort(ary);
-        long minSum = Long.MAX_VALUE;
+        int minSum = Integer.MAX_VALUE;
         int[] result = new int[] { Integer.MAX_VALUE, Integer.MAX_VALUE };
 
         int left = 0;
         int right = n - 1;
 
         while (left < right) {
-            long sum = (long) ary[left] + ary[right];
+            int sum = ary[left] + ary[right];
 
             if (Math.abs(sum) < Math.abs(minSum)) {
                 minSum = sum;
