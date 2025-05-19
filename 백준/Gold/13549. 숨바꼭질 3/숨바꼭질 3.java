@@ -8,7 +8,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
         int k = sc.nextInt();
-        int MAX = 200_000;
+        int MAX = 100_001;
 
         int[] dp = new int[MAX];
         Arrays.fill(dp, Integer.MAX_VALUE);
