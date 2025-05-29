@@ -22,14 +22,6 @@ public class Main {
         }
 
         // 전체 돌면서 진실을 아는 사람과 함께 했던 사람들 모두 진실 아는것으로 변경
-        for (int i = 0; i < m; i++) {
-            BitSet tmp = (BitSet) party[i].clone();
-            tmp.and(truth);
-            if (!tmp.isEmpty()) {
-                truth.or(party[i]);
-            }
-        }
-
         boolean updated;
         do {
             updated = false;
