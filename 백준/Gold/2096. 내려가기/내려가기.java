@@ -8,8 +8,10 @@ public class Main {
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(bf.readLine());
         int[][] ary = new int[n][3];
-        int[][] dp_max = new int[n][3];
-        int[][] dp_min = new int[n][3];
+        int[] prev_max = new int[3];
+        int[] prev_min = new int[3];
+        int[] now_max = new int[3];
+        int[] now_min = new int[3];
 
         StringTokenizer st;
         for (int i = 0; i < n; i++) {
@@ -19,21 +21,26 @@ public class Main {
             ary[i][2] = Integer.parseInt(st.nextToken());
         }
 
-        dp_min[n - 1][0] = dp_max[n - 1][0] = ary[n - 1][0];
-        dp_min[n - 1][1] = dp_max[n - 1][1] = ary[n - 1][1];
-        dp_min[n - 1][2] = dp_max[n - 1][2] = ary[n - 1][2];
+        prev_min[0] = prev_max[0] = ary[n - 1][0];
+        prev_min[1] = prev_max[1] = ary[n - 1][1];
+        prev_min[2] = prev_max[2] = ary[n - 1][2];
 
         for (int i = n - 2; i >= 0; i--) {
-            dp_max[i][0] = ary[i][0] + Math.max(dp_max[i + 1][0], dp_max[i + 1][1]);
-            dp_max[i][1] = ary[i][1] + Math.max(dp_max[i + 1][0], Math.max(dp_max[i + 1][1], dp_max[i + 1][2]));
-            dp_max[i][2] = ary[i][2] + Math.max(dp_max[i + 1][1], dp_max[i + 1][2]);
+            now_max[0] = ary[i][0] + Math.max(prev_max[0], prev_max[1]);
+            now_max[1] = ary[i][1] + Math.max(Math.max(prev_max[0], prev_max[1]), prev_max[2]);
+            now_max[2] = ary[i][2] + Math.max(prev_max[1], prev_max[2]);
 
-            dp_min[i][0] = ary[i][0] + Math.min(dp_min[i + 1][0], dp_min[i + 1][1]);
-            dp_min[i][1] = ary[i][1] + Math.min(dp_min[i + 1][0], Math.min(dp_min[i + 1][1], dp_min[i + 1][2]));
-            dp_min[i][2] = ary[i][2] + Math.min(dp_min[i + 1][1], dp_min[i + 1][2]);
+            now_min[0] = ary[i][0] + Math.min(prev_min[0], prev_min[1]);
+            now_min[1] = ary[i][1] + Math.min(Math.min(prev_min[0], prev_min[1]), prev_min[2]);
+            now_min[2] = ary[i][2] + Math.min(prev_min[1], prev_min[2]);
+
+            for (int j = 0; j < 3; j++) {
+                prev_max[j] = now_max[j];
+                prev_min[j] = now_min[j];
+            }
         }
 
-        System.out.println(Math.max(dp_max[0][0], Math.max(dp_max[0][1], dp_max[0][2])) + " "
-                + Math.min(dp_min[0][0], Math.min(dp_min[0][1], dp_min[0][2])));
+        System.out.println(Math.max(prev_max[0], Math.max(prev_max[1], prev_max[2])) + " "
+                + Math.min(prev_min[0], Math.min(prev_min[1], prev_min[2])));
     }
 }
