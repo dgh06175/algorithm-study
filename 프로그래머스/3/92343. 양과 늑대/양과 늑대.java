@@ -13,7 +13,6 @@ class Solution {
         
         for(int i = 0; i < edges.length; i++) {
             graph[edges[i][0]].add(edges[i][1]);
-            // graph[edges[i][1]].add(edges[i][0]);
         }
         dfs(info, graph, 0, 0, 0, new boolean[n]);
         
