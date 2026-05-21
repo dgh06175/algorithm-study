@@ -18,17 +18,12 @@ class Solution {
 			
 			// 뒤에서부터 오면서 최대값 기록, 갱신 시 지금까지 온 날짜만큼 팔기. -> 최대 2백만
 			long ans = 0;
-			int maxIndex = n - 1;
+			int max = ary[n - 1];
 			for(int i = n - 1; i >= 0; i--) {
-				if (ary[maxIndex] < ary[i]) {
-					for(int j = i + 1; j < maxIndex; j++) {
-						ans += (long) ary[maxIndex] - ary[j];
-					}
-					maxIndex = i;
-				} else if (i == 0) {
-					for(int j = i; j < maxIndex; j++) {
-						ans += (long) ary[maxIndex] - ary[j];
-					}
+				if (max > ary[i]) {
+					ans += max - ary[i];
+				} else if (max < ary[i]) {
+					max = ary[i];
 				}
 			}
 			
