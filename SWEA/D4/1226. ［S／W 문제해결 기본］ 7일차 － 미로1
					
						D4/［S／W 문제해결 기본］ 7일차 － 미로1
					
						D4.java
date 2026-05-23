@@ -20,28 +20,34 @@ class Solution {
 	static boolean run() throws IOException {
 		br.readLine();
 		
-		int[][] graph = new int[n][n];
+		boolean[][] graph = new boolean[n][n];
 		int y = -1, x = -1;
+		int ans_y = -1, ans_x = -1;
 		
 		for(int i = 0; i < n; i++) {
 			char[] input = br.readLine().toCharArray();
 			for(int j = 0; j < n; j++) {
-				graph[i][j] = input[j] - '0';
-				if (graph[i][j] == 2) {
+				int num = input[j] - '0';
+				graph[i][j] = (num == 1);
+				if (num == 2) {
 					y = i;
 					x = j;
+				} else if (num == 3) {
+					ans_y = i;
+					ans_x = j;
 				}
 			}
 		}
-		if (y == -1 || x == -1) {
-			System.out.println("ERROR");
-			return false;
+		
+		if (y == -1 || x == -1 || ans_y == -1 || ans_x == -1) {
+		    System.out.println("ERROR");
+		    return false;
 		}
 		
-		return bfs(graph, y, x);
+		return bfs(graph, y, x, ans_y, ans_x);
 	}
 	
-	static boolean bfs(int[][] graph, int start_y, int start_x) {
+	static boolean bfs(boolean[][] graph, int start_y, int start_x, int ans_y, int ans_x) {
 		boolean[][] visited = new boolean[n][n];
 		visited[start_y][start_x] = true;
 		Queue<int[]> queue = new ArrayDeque<>();
@@ -58,12 +64,17 @@ class Solution {
 				if (ny < 0 || nx < 0 || ny >= n || nx >= n) {
 					continue;
 				}
+				if (visited[ny][nx]) {
+					continue;
+				}
 				
-				if (!visited[ny][nx] && graph[ny][nx] == 0) {
+				if (ny == ans_y && nx == ans_x) {
+					return true;
+				}
+				
+				if (!graph[ny][nx]) {
 					queue.offer(new int[] {ny, nx});
 					visited[ny][nx] = true;
-				} else if (graph[ny][nx] == 3) {
-					return true;
 				}
 			}
 		}
