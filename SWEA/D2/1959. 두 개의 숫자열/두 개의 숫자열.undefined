@@ -1,0 +1,80 @@
+import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+
+
+class Solution
+{
+	public static void main(String args[]) throws Exception
+	{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int T = Integer.parseInt(br.readLine());
+
+        StringTokenizer st;
+        StringBuilder sb = new StringBuilder();
+
+		for(int test_case = 1; test_case <= T; test_case++)
+		{
+            st = new StringTokenizer(br.readLine());
+            int n = Integer.parseInt(st.nextToken());
+            int m = Integer.parseInt(st.nextToken());
+
+            int[] A = new int[n];
+            int[] B = new int[m];
+
+            st = new StringTokenizer(br.readLine());
+            for(int i = 0; i < n; i++) {
+                A[i] = Integer.parseInt(st.nextToken());
+            }
+
+            st = new StringTokenizer(br.readLine());
+            for(int i = 0; i < m; i++) {
+                B[i] = Integer.parseInt(st.nextToken());
+            }
+            
+            int ans = myFunc(n, m, A, B);
+            sb.append("#").append(test_case).append(" ").append(ans).append("\n");
+		}
+
+        System.out.print(sb.toString());
+	}
+
+    static int myFunc(int n, int m, int[] A, int[] B) {
+        int ans = Integer.MIN_VALUE;
+        if (n < m) {
+            int moveCount = m - n;
+            for(int i = 0; i <= moveCount; i++) {
+                ans = Math.max(ans, calcN(n, m, A, B, i));
+            }
+        } else {
+            int moveCount = n - m;
+            for(int i = 0; i <= moveCount; i++) {
+                ans = Math.max(ans, calcM(n, m, A, B, i));
+            }
+        }
+        // System.out.println("ans: " + ans);
+
+        return ans;
+    }
+
+    static int calcN(int n, int m, int[] A, int[] B, int i) {
+        int sum = 0;
+        for(int j = 0; j < n; j++) {
+            sum += A[j] * B[j + i];
+        }
+        // System.out.println("sumN: " + sum);
+
+        return sum;
+    }
+
+    static int calcM(int n, int m, int[] A, int[] B, int i) {
+        int sum = 0;
+        for(int j = 0; j < m; j++) {
+            sum += A[j + i] * B[j];
+        }
+        // System.out.println("sumM: " + sum);
+        return sum;
+    }
+}
+
