@@ -1,0 +1,101 @@
+import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+
+
+class Solution
+{
+    static int[] dy = {1, -1, 0, 0};
+    static int[] dx = {0, 0, 1, -1};
+
+	public static void main(String args[]) throws Exception
+	{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int T = Integer.parseInt(br.readLine());
+
+        StringTokenizer st;
+        StringBuilder sb = new StringBuilder();
+
+		for(int test_case = 1; test_case <= T; test_case++)
+		{
+            int n = Integer.parseInt(br.readLine());
+            int[][] ary = new int[n][n];
+            for(int i = 0; i < n; i++) {
+                st = new StringTokenizer(br.readLine());
+                for(int j = 0; j < n; j++) {
+                    ary[i][j] = Integer.parseInt(st.nextToken());
+                }
+            }
+            st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            st = new StringTokenizer(br.readLine());
+            int c = Integer.parseInt(st.nextToken());
+            int d = Integer.parseInt(st.nextToken());
+            
+            int answer = calcMinDist(n, ary, a, b, c, d);
+            sb.append("#")
+                .append(test_case)
+                .append(" ")
+                .append(answer)
+                .append("\n");
+		}
+
+        System.out.print(sb.toString());
+	}
+
+    static int calcMinDist(int n, int[][] ary, int a, int b, int c, int d) {
+        int[][] dist = new int[n][n];
+        for(int i = 0; i < n; i++) {
+            Arrays.fill(dist[i], -1);
+        }
+        dist[a][b] = 0;
+        
+        for(int t = 1; t < 15 * 15 + 1; t++) {
+            boolean[][] check = new boolean[n][n];            
+            
+            for(int i = 0; i < n; i++) {
+                for(int j = 0; j < n; j++) {
+                    if (dist[i][j] < 0) {
+                        continue;
+                    }
+                    if (ary[i][j] == 1) {
+                        continue;
+                    }
+
+                    for(int direction = 0; direction < 4; direction++) {
+                        int ny = i + dy[direction];
+                        int nx = j + dx[direction];
+                        if (ny < 0 || nx < 0 || ny >= n || nx >= n) {
+                            continue;
+                        }
+
+                        if (ary[ny][nx] == 0) {
+                            if (dist[ny][nx] == -1 || dist[ny][nx] > t) {
+                                check[ny][nx] = true;
+                            }
+                            continue;
+                        }
+                        
+                        if (ary[ny][nx] == 2 && t % 3 == 0 && t != 0) {
+                            if (dist[ny][nx] == -1 || dist[ny][nx] > t) {
+                                check[ny][nx] = true;
+                            }
+                            continue;
+                        }
+                    }
+                }
+            }
+
+            for(int i = 0; i < n; i++) {
+                for(int j = 0; j < n; j++) {
+                    if (check[i][j]) {
+                        dist[i][j] = t;
+                    }
+                }
+            }
+        }
+        return dist[c][d];
+    }
+}
