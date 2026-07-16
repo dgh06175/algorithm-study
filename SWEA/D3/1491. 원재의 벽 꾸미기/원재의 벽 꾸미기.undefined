@@ -1,0 +1,34 @@
+import java.util.*;
+import java.io.*;
+
+class Solution
+{
+	public static void main(String args[]) throws Exception
+	{
+		//System.setIn(new FileInputStream("res/input.txt"));
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int T = Integer.parseInt(br.readLine());
+
+		for(int test_case = 1; test_case <= T; test_case++)
+		{
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			long n = Long.parseLong(st.nextToken()); // r * c <= n
+			long a = Long.parseLong(st.nextToken());
+			long b = Long.parseLong(st.nextToken());
+			
+			long ans = Long.MAX_VALUE;
+			
+			// c <= n / r
+			for(int r = 1; r <= n; r++) {
+				for(int c = 1; c <= n / r; c++) {
+					if (r * c > n) continue;
+					long value = a * Math.abs(r - c) + b * (n - r * c);
+					ans = Math.min(ans, value);
+				}
+			}
+			
+			System.out.println("#" + test_case + " " + ans);
+		}
+	}
+}
