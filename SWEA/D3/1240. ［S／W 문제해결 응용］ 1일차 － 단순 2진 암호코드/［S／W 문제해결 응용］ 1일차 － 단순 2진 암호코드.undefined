@@ -1,0 +1,108 @@
+import java.util.*;
+import java.io.*;
+
+class Solution {
+	public static void main(String args[]) throws IOException {
+		//System.setIn(new FileInputStream("res/input.txt"));
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int T = Integer.parseInt(br.readLine());
+
+		for (int test_case = 1; test_case <= T; test_case++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			int n = Integer.parseInt(st.nextToken());
+			int m = Integer.parseInt(st.nextToken());
+			int[][] ary = new int[n][m];
+			for(int i = 0; i < n; i++) {
+				String line = br.readLine();
+				for(int j = 0; j < m; j++) {
+					ary[i][j] = line.charAt(j) == '1' ? 1 : 0;
+				}
+			}
+			
+			int[] codeAry = scan(ary, n, m); 
+			
+			int[] code = new int[8];
+			for(int i = 0; i < 8; i++) {
+				code[i] = getNumber(codeAry, i * 7);
+			}
+			
+			int oddSum = 0;
+			int evenSum = 0;
+			int ans = 0;
+			for(int i = 0; i < 8; i++) {
+				ans += code[i];
+				if ((i+1) % 2 == 1) { // 홀수 자리일 경우
+					oddSum += code[i] * 3;
+				} else {
+					evenSum += code[i];
+				}
+			}
+			
+			
+			if ((oddSum + evenSum) % 10 != 0) {
+				ans = 0;
+			}
+						
+			System.out.println("#" + test_case + " " + ans);
+		}
+	}
+	
+	static int[] scan(int[][] ary, int n, int m) {
+		int lasty = -1;
+		int lastx = -1;
+		int startx = -1;
+		
+		outer:
+		for(int i = n - 1; i >= 0; i--) {
+			for(int j = m - 1; j >= 0; j--) {
+				if (ary[i][j] == 1) {
+					lasty = i;
+					lastx = j;
+					break outer;
+				}
+			}
+		}
+		startx = lastx - 56;
+		int[] codeAry = new int[56];
+		for(int i = 0; i < 56; i++) {
+			codeAry[i] = ary[lasty][startx + i + 1];
+		}
+
+		return codeAry;
+	}
+	
+	static int getNumber(int[] codeAry, int start) {
+		int num = 0;
+		for(int i = 6; i >=0; i--) {
+			if (codeAry[start + i] == 1) {
+				num += Math.pow(10, 6-i);
+			}
+		}
+		
+		switch (num) {
+			case 1101:
+				return 0;
+			case 11001:
+				return 1;
+			case 10011:
+				return 2;
+			case 111101:
+				return 3;
+			case 100011:
+				return 4;
+			case 110001:
+				return 5;
+			case 101111:
+				return 6;
+			case 111011:
+				return 7;
+			case 110111:
+				return 8;
+			case 1011:
+				return 9;
+			default:
+				return -1;
+		}
+	}
+}
