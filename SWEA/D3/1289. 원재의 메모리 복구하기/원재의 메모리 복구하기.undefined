@@ -1,0 +1,30 @@
+import java.util.*;
+import java.io.*;
+
+class Solution {
+	public static void main(String args[]) throws IOException {
+		//System.setIn(new FileInputStream("res/input.txt"));
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int T = Integer.parseInt(br.readLine());
+
+		for (int test_case = 1; test_case <= T; test_case++) {
+			int ans = 0;
+			
+			char[] ary = br.readLine().toCharArray();
+			boolean[] boolAry = new boolean[ary.length];
+			for(int i = 0; i < ary.length; i++) {
+				boolAry[i] = (ary[i] == '1');
+			}
+			
+			boolean now = false;
+			for(int i = 0; i < ary.length; i++) {
+				if (boolAry[i] != now) {
+					ans++;
+					now = boolAry[i];
+				}
+			}
+			
+			System.out.println("#" + test_case + " " + ans);
+		}
+	}
+}
