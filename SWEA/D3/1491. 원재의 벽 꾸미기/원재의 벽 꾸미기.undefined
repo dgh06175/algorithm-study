@@ -20,7 +20,7 @@ class Solution
 			long ans = Long.MAX_VALUE;
 			
 			// c <= n / r
-			for(int r = 1; r <= n; r++) {
+			for(int r = 1; r * r <= n; r++) {
 				for(int c = 1; c <= n / r; c++) {
 					if (r * c > n) continue;
 					long value = a * Math.abs(r - c) + b * (n - r * c);
