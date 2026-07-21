@@ -1,0 +1,207 @@
+import java.util.*;
+import java.io.*;
+
+class Solution {
+	public static void main(String args[]) throws Exception {
+		//System.setIn(new FileInputStream("input.txt"));
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int T = Integer.parseInt(br.readLine());
+		StringTokenizer st;
+		for (int test_case = 1; test_case <= T; test_case++) {
+			st = new StringTokenizer(br.readLine());
+			int N = Integer.parseInt(st.nextToken());
+			int M = Integer.parseInt(st.nextToken());
+			int K = Integer.parseInt(st.nextToken());
+			int A = Integer.parseInt(st.nextToken());
+			int B = Integer.parseInt(st.nextToken());
+
+			int[] a = new int[N];
+			st = new StringTokenizer(br.readLine());
+			for(int i = 0; i < N; i++) {
+				a[i] = Integer.parseInt(st.nextToken());
+			}
+			int[] b = new int[M];
+			st = new StringTokenizer(br.readLine());
+			for(int i = 0; i < M; i++) {
+				b[i] = Integer.parseInt(st.nextToken());
+			}
+			int[] k = new int[K];
+			st = new StringTokenizer(br.readLine());
+			for(int i = 0; i < K; i++) {
+				k[i] = Integer.parseInt(st.nextToken());
+			}
+			
+			// if (test_case != 2) continue;
+			int ans = myFunc(N, M, K, A, B, a, b, k);
+			if (ans == 0) {
+				ans = -1;
+			}
+
+			System.out.printf("#%d %d\n", test_case, ans);
+		}
+	}
+
+	static int myFunc(int N, int M, int K, int A, int B, int[] a, int[] b, int[] k) {
+		Queue<Customer> arriveQueue = new ArrayDeque<>();
+		Queue<Customer> receptionQueue = new ArrayDeque<>();
+		Queue<Customer> repairQueue = new ArrayDeque<>();
+		Desk[] receptionDesks = new Desk[N];
+		Desk[] repairDesks = new Desk[M];
+
+		for(int i = 0; i < K; i++) {
+			arriveQueue.offer(new Customer(i + 1, k[i]));
+		}
+
+		for(int i = 0; i < N; i++) {
+			receptionDesks[i] = new Desk(i + 1, a[i]);
+		}
+		for(int i = 0; i < M; i++) {
+			repairDesks[i] = new Desk(i + 1, b[i]);
+		}
+
+		int ans = 0;
+		int endCount = 0;
+		for(int time = 0; endCount < K; time++) {
+			// System.out.println("time: " + time);
+			// 정비 종료 확인하고 창구 비우기 
+			ArrayList<Customer> endCustomers = checkRepairDesk(M, repairDesks, time);
+			endCount += endCustomers.size();
+
+			// (정답 확인)
+			for(int i = 0; i < endCustomers.size(); i++) {
+				if (endCustomers.get(i).receptionNum == A && endCustomers.get(i).repairNum == B) {
+					ans += endCustomers.get(i).num;
+				}
+			}
+
+			// 접수 창구 확인하고 창구 비우고
+			ArrayList<Customer> receptEndCustomers = checkReceptionDesk(N, receptionDesks, time);
+
+			// 정비 큐에 넣기
+			repairQueue.addAll(receptEndCustomers);
+
+			// 입장 큐 확인하고 접수 큐에 넣기
+			while(!arriveQueue.isEmpty() && arriveQueue.peek().arriveTime <= time) {
+				receptionQueue.offer(arriveQueue.poll());
+			}
+
+			// 정비 창구가 비어있다면 정비 큐에서 꺼내서 정비 시작
+			startRepair(M, repairDesks, time, repairQueue);
+
+			// 접수 창구가 비어있다면 접수 큐에서 꺼내서 접수 시작
+			startReception(N, receptionDesks, time, receptionQueue);
+		}
+
+		return ans;
+	}
+
+	// 정비 종료 확인하고 창구 비우기
+	static ArrayList<Customer> checkRepairDesk(int M, Desk[] repairDesks, int time) {
+		ArrayList<Customer> ary = new ArrayList<>();
+		for(int i = 0; i < M; i++) {
+			Desk desk = repairDesks[i];
+			if (!desk.isEmpty() && desk.isProcessEnd(time)) {
+				Customer c = desk.customerOut();
+				c.repairNum = desk.num;
+				ary.add(c);
+				// System.out.println("손님" + c.num + " 정비" + desk.num + " 완료. END");
+			}
+		}
+		return ary;
+	}
+
+	// 접수 창구 확인하고 창구 비우고
+	static ArrayList<Customer> checkReceptionDesk(int N, Desk[] receptionDesks, int time) {
+		ArrayList<Customer> ary = new ArrayList<>();
+		for(int i = 0; i < N; i++) {
+			Desk desk = receptionDesks[i];
+			if (!desk.isEmpty() && desk.isProcessEnd(time)) {
+				Customer c = desk.customerOut();
+				c.receptionNum = desk.num;
+				ary.add(c);
+				// System.out.println("손님" + c.num + " 접수" + desk.num + " 완료.");
+			}
+		}
+		return ary;
+	}
+
+	// 정비 창구가 비어있다면 정비 큐에서 꺼내서 정비 시작
+	static void startRepair(int M, Desk[] repairDesks, int time, Queue<Customer> repairQueue) {
+		for(int i = 0; i < M; i++) {
+			Desk desk = repairDesks[i];
+			if (!repairQueue.isEmpty() && desk.isEmpty()) {
+				Customer c = repairQueue.poll();
+				desk.customerIn(c, time);
+				// System.out.println("손님" + c.num + " 정비" + desk.num + " 시작.");
+			}
+		}
+	}
+
+	// 접수 창구가 비어있다면 접수 큐에서 꺼내서 접수 시작
+	static void startReception(int N, Desk[] receptionDesks, int time, Queue<Customer> receptionQueue) {
+		for(int i = 0; i < N; i++) {
+			Desk desk = receptionDesks[i];
+			if (!receptionQueue.isEmpty() && desk.isEmpty()) {
+				Customer c = receptionQueue.poll();
+				desk.customerIn(c, time);
+				// System.out.println("손님" + c.num + " 접수" + desk.num + " 시작.");
+			}
+		}
+	}
+}
+
+class Customer {
+	final int num;
+	final int arriveTime;
+	int receptionNum;
+	int repairNum;
+	int repairQueueEnterTime;
+
+	Customer(int num, int arriveTime) {
+		this.num = num;
+		this.arriveTime = arriveTime;
+	}
+}
+
+class Desk {
+	final int num;
+	final int processTime;
+	Customer customer;
+	private int processStartTime;
+
+	Desk(int num, int processTime) {
+		this.num = num;
+		this.processTime = processTime;
+	}
+
+	void customerIn(Customer c, int time) {
+		customer = c;
+		processStartTime = time;
+	}
+
+	Customer customerOut() {
+		if (customer == null) {
+			System.out.println("ERROR in customerOut");
+			return null;
+		}
+
+		Customer c = customer;
+		customer = null;
+		processStartTime = -1;
+		return c;
+	}
+
+	boolean isProcessEnd(int time) {
+		if (processStartTime == -1 || customer == null) {
+			System.out.println("ERROR in isProcessEnd");
+			return false;
+		}
+		// System.out.println("pst: " + processStartTime + ", pct: " + processTime + ", time: " + time);
+		return processStartTime + processTime <= time;
+	}
+
+	boolean isEmpty() {
+		return customer == null;
+	}
+}
