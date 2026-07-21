@@ -3,7 +3,7 @@ import java.io.*;
 
 class Solution {
 	public static void main(String args[]) throws Exception {
-		//System.setIn(new FileInputStream("input.txt"));
+		// System.setIn(new FileInputStream("input.txt"));
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int T = Integer.parseInt(br.readLine());
@@ -32,7 +32,6 @@ class Solution {
 				k[i] = Integer.parseInt(st.nextToken());
 			}
 			
-			// if (test_case != 2) continue;
 			int ans = myFunc(N, M, K, A, B, a, b, k);
 			if (ans == 0) {
 				ans = -1;
@@ -44,12 +43,8 @@ class Solution {
 
 	static int myFunc(int N, int M, int K, int A, int B, int[] a, int[] b, int[] k) {
 		Queue<Customer> arriveQueue = new ArrayDeque<>();
-		Queue<Customer> receptionQueue = new PriorityQueue<>((c1, c2) -> Integer.compare(c1.num, c2.num));
-		Queue<Customer> repairQueue = new PriorityQueue<>((c1, c2) -> {
-			int tmp = Integer.compare(c1.repairQueueEnterTime, c2.repairQueueEnterTime);
-			if (tmp != 0) return tmp;
-			return Integer.compare(c1.receptionNum, c2.receptionNum);
-		});
+		Queue<Customer> receptionQueue = new ArrayDeque<>();
+		Queue<Customer> repairQueue = new ArrayDeque<>();
 		Desk[] receptionDesks = new Desk[N];
 		Desk[] repairDesks = new Desk[M];
 
@@ -114,7 +109,6 @@ class Solution {
 				Customer c = desk.customerOut();
 				c.repairNum = desk.num;
 				ary.add(c);
-				// System.out.println("손님" + c.num + " 정비" + desk.num + " 완료. END");
 			}
 		}
 		return ary;
@@ -129,7 +123,6 @@ class Solution {
 				Customer c = desk.customerOut();
 				c.receptionNum = desk.num;
 				ary.add(c);
-				// System.out.println("손님" + c.num + " 접수" + desk.num + " 완료.");
 			}
 		}
 		return ary;
@@ -142,7 +135,6 @@ class Solution {
 			if (!repairQueue.isEmpty() && desk.isEmpty()) {
 				Customer c = repairQueue.poll();
 				desk.customerIn(c, time);
-				// System.out.println("손님" + c.num + " 정비" + desk.num + " 시작.");
 			}
 		}
 	}
@@ -154,7 +146,6 @@ class Solution {
 			if (!receptionQueue.isEmpty() && desk.isEmpty()) {
 				Customer c = receptionQueue.poll();
 				desk.customerIn(c, time);
-				// System.out.println("손님" + c.num + " 접수" + desk.num + " 시작.");
 			}
 		}
 	}
@@ -191,8 +182,7 @@ class Desk {
 
 	Customer customerOut() {
 		if (customer == null) {
-			System.out.println("ERROR in customerOut");
-			return null;
+			throw new IllegalStateException();
 		}
 
 		Customer c = customer;
@@ -203,10 +193,8 @@ class Desk {
 
 	boolean isProcessEnd(int time) {
 		if (processStartTime == -1 || customer == null) {
-			System.out.println("ERROR in isProcessEnd");
-			return false;
+			throw new IllegalStateException();
 		}
-		// System.out.println("pst: " + processStartTime + ", pct: " + processTime + ", time: " + time);
 		return processStartTime + processTime <= time;
 	}
 
