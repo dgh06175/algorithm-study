@@ -5,7 +5,7 @@ class Solution {
         int n = numbers.length;
         String[] ary = Arrays.stream(numbers)
             .mapToObj(String::valueOf)
-            .sorted((n1, n2) -> -(n1 + n2).compareTo(n2 + n1))
+            .sorted((n1, n2) -> (n2 + n2 + n2).compareTo(n1 + n1 + n1))
             .toArray(String[]::new);
         
         
