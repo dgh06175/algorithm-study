@@ -1,13 +1,20 @@
 import java.util.*;
-import java.util.stream.Collectors;
 
 class Solution {
     public static String solution(int[] numbers) {
-        if (Arrays.stream(numbers).sum() == 0)
-            return "0";
-        return Arrays.stream(numbers)
-                .mapToObj(String::valueOf)
-                .sorted((a, b) -> (b + a).compareTo(a + b))
-                .collect(Collectors.joining(""));
+        int n = numbers.length;
+        String[] ary = Arrays.stream(numbers)
+            .mapToObj(String::valueOf)
+            .sorted((n1, n2) -> -(n1 + n2).compareTo(n2 + n1))
+            .toArray(String[]::new);
+        
+        
+        StringBuilder sb = new StringBuilder();
+        for(String s: ary) {
+            sb.append(s);
+        }
+        String result = sb.toString();
+        if (result.charAt(0) == '0') return "0";
+        return result;
     }
 }
