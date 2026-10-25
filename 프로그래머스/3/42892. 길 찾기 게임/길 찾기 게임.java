@@ -18,13 +18,7 @@ class Solution {
             nodes[i] = new Node(i + 1, nodeinfo[i]);
         }
         
-        Arrays.sort(nodes, (a, b) -> {
-            int tmp = Integer.compare(b.y, a.y);
-            if (tmp != 0) {
-                return tmp;
-            }
-            return Integer.compare(a.x, b.x);
-        });
+        Arrays.sort(nodes, (a, b) -> Integer.compare(b.y, a.y));
         
         for(int i = 1; i < n; i++) {
             insertNode(nodes[0], nodes[i]);
